@@ -1,0 +1,134 @@
+#N canvas -8 -8 1366 685 12;
+#X obj 118 137 hsl 240 15 0.19 19 1 0 empty empty LFO_Freq -2 -8 0
+10 -258113 -262144 -1 0 1;
+#X obj 118 265 hsl 128 15 50 5000 1 0 empty empty Width -2 -8 0 10
+-261313 -262144 -1 0 1;
+#X floatatom 115 157 5 0 0 0 - - -;
+#X floatatom 115 285 5 0 0 0 - - -;
+#X obj 119 328 hsl 128 15 0 5 0 0 empty empty Q -2 -8 0 10 -257985
+-262144 -1 0 1;
+#X floatatom 116 348 5 0 0 0 - - -;
+#X obj 118 392 hsl 128 15 0 500 0 0 empty empty Port -2 -8 0 10 -171969
+-262144 -1 0 1;
+#X floatatom 115 412 5 0 0 0 - - -;
+#X obj 114 21 inlet;
+#X obj 118 201 hsl 128 15 80 8000 1 0 empty empty Min_Freq -2 -8 0
+10 -259777 -262144 -1 0 1;
+#X floatatom 115 221 5 0 0 0 - - -;
+#X obj 114 48 unpack f f f f f f f;
+#X obj 143 470 outlet;
+#X obj 193 470 outlet;
+#X obj 243 470 outlet;
+#X obj 293 470 outlet;
+#X obj 343 470 outlet;
+#X obj 143 494 s lfoph;
+#X obj 194 494 s minph;
+#X obj 244 494 s qph;
+#X obj 283 494 s widthph;
+#X obj 345 494 s delph;
+#X obj 395 494 s fbph;
+#X obj 439 494 s port;
+#X obj 144 536 s lfofreq;
+#X obj 231 536 s lfowidth;
+#X obj 187 557 s lfomin;
+#X obj 274 557 s filtq;
+#X obj 319 536 s freqport;
+#X obj 281 201 tgl 25 0 empty empty Vibrato 27 7 0 10 -259777 -1 -1
+1 1;
+#X obj 400 538 s vibrato;
+#X obj 281 265 tgl 25 0 empty empty Multi-Attack 28 7 0 10 -261313
+-1 -1 0 1;
+#X obj 401 564 s multatk;
+#X obj 281 328 tgl 25 0 empty empty READVEL 28 7 0 10 -257985 -1 -1
+0 1;
+#X obj 402 589 s readvel;
+#X obj 402 137 hsl 250 15 0 1 0 0 empty empty Detune -2 -8 0 10 -258111
+-1 -1 0 1;
+#X obj 828 227 s detune;
+#X floatatom 399 158 5 0 0 0 - - -;
+#X obj 780 126 loadbang;
+#X msg 779 147 0;
+#X obj 402 201 hsl 250 15 0 1 0 0 empty empty Vib_Depth -2 -8 0 10
+-143424 -1 -1 3788 1;
+#X obj 739 339 s vib_depth;
+#X floatatom 399 221 5 0 0 0 - - -;
+#X obj 742 252 loadbang;
+#X msg 743 276 0.12;
+#X obj 401 264 hsl 250 15 0.2 20 1 0 empty empty Vib_Freq -2 -8 0 10
+-768 -1 -1 498 1;
+#X floatatom 398 284 5 0 0 0 - - -;
+#X obj 907 193 s vib_freq;
+#X obj 911 106 loadbang;
+#X msg 912 132 0.4;
+#X msg 966 215 55.27;
+#X msg 947 131 1.11;
+#X obj 401 326 hsl 250 15 0 20 0 0 empty empty Atk_Freq -2 -8 0 10
+-2688 -1 -1 0 1;
+#X obj 741 433 s atk_freq;
+#X floatatom 398 346 5 0 0 0 - - -;
+#X obj 284 391 hsl 160 15 90 2000 1 0 empty empty ADSR_Min -2 -8 0
+10 -4049 -1 -1 8252 1;
+#X floatatom 281 412 5 0 0 0 - - -;
+#X obj 676 602 s adsrmin;
+#X obj 676 514 loadbang;
+#X msg 676 536 450;
+#X obj 459 391 hsl 192 15 500 8000 1 0 empty empty ADSR_Width -2 -8
+0 10 -4082 -1 -1 10513 1;
+#X floatatom 456 411 5 0 0 0 - - -;
+#X obj 890 586 s adsrwidth;
+#X obj 892 499 loadbang;
+#X msg 890 522 2300;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 2 0 12 0;
+#X connect 2 0 17 0;
+#X connect 2 0 24 0;
+#X connect 3 0 14 0;
+#X connect 3 0 20 0;
+#X connect 3 0 25 0;
+#X connect 4 0 5 0;
+#X connect 5 0 15 0;
+#X connect 5 0 19 0;
+#X connect 5 0 27 0;
+#X connect 6 0 7 0;
+#X connect 7 0 16 0;
+#X connect 7 0 23 0;
+#X connect 7 0 28 0;
+#X connect 8 0 11 0;
+#X connect 9 0 10 0;
+#X connect 10 0 13 0;
+#X connect 10 0 18 0;
+#X connect 10 0 26 0;
+#X connect 11 0 0 0;
+#X connect 11 1 9 0;
+#X connect 11 2 1 0;
+#X connect 11 3 4 0;
+#X connect 11 4 6 0;
+#X connect 29 0 30 0;
+#X connect 31 0 32 0;
+#X connect 33 0 34 0;
+#X connect 35 0 37 0;
+#X connect 37 0 36 0;
+#X connect 38 0 39 0;
+#X connect 39 0 35 0;
+#X connect 40 0 42 0;
+#X connect 42 0 41 0;
+#X connect 43 0 44 0;
+#X connect 44 0 40 0;
+#X connect 45 0 46 0;
+#X connect 46 0 47 0;
+#X connect 48 0 49 0;
+#X connect 49 0 45 0;
+#X connect 50 0 45 0;
+#X connect 51 0 45 0;
+#X connect 52 0 54 0;
+#X connect 54 0 53 0;
+#X connect 55 0 56 0;
+#X connect 56 0 57 0;
+#X connect 58 0 59 0;
+#X connect 59 0 55 0;
+#X connect 60 0 61 0;
+#X connect 61 0 62 0;
+#X connect 63 0 64 0;
+#X connect 64 0 60 0;
+#X coords 0 -1 1 1 600 350 1 100 100;

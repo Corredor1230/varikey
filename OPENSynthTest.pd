@@ -1,0 +1,26 @@
+#N canvas -8 -8 1366 685 12;
+#X obj 1181 166 versatile;
+#X obj 1046 36 SynthToggler;
+#X obj 1099 166 noisesynth;
+#X obj 17 36 SynthEnvelopes;
+#X obj 1123 217 SynthFader;
+#X obj 438 36 SynthFeatures;
+#X obj 439 394 customtemp;
+#X obj 1111 555 threshold~ 1;
+#X obj 1111 583 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 1221 555 threshold~ 1;
+#X obj 1221 583 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X connect 0 0 4 0;
+#X connect 0 1 4 1;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 1 2 2 0;
+#X connect 1 3 2 1;
+#X connect 2 0 4 0;
+#X connect 2 1 4 1;
+#X connect 4 0 7 0;
+#X connect 4 1 9 0;
+#X connect 7 0 8 0;
+#X connect 9 0 10 0;
