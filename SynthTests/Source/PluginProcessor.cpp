@@ -336,146 +336,146 @@ void NewProjectAudioProcessor::parameterChanged(const juce::String& paramID, flo
     
     if (paramID == "freq")
     {
-        ctrl.setParamValue("/Synthesizer/freq", newValue);
+        ctrl.setParamValue("/Synthesizer/Pitch/freq", newValue);
     }
     else if (paramID == "vFreq")
     {
-        ctrl.setParamValue("/Synthesizer/vFreq", newValue);
+        ctrl.setParamValue("/Synthesizer/Pitch/vFreq", newValue);
 
     }
     else if (paramID == "vDepth")
     {
-        ctrl.setParamValue("/Synthesizer/vDepth", newValue);
+        ctrl.setParamValue("/Synthesizer/Pitch/vDepth", newValue);
 
     }
     else if (paramID == "pWheel")
     {
-        ctrl.setParamValue("/Synthesizer/pWheel", newValue);
+        ctrl.setParamValue("/Synthesizer/Pitch/pWheel", newValue);
 
     }
     else if (paramID == "detune")
     {
-        ctrl.setParamValue("/Synthesizer/detune", newValue);
+        ctrl.setParamValue("/Synthesizer/Pitch/detune", newValue);
 
     }
     else if (paramID == "gain")
     {
-        ctrl.setParamValue("/Synthesizer/gain", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Envelope/gain", newValue);
 
     }
     else if (paramID == "gate")
     {
-        ctrl.setParamValue("/Synthesizer/gate", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/gate", newValue);
 
     }
     else if (paramID == "att")
     {
-        ctrl.setParamValue("/Synthesizer/att", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Envelope/att", newValue);
 
     }
     else if (paramID == "dec")
     {
-        ctrl.setParamValue("/Synthesizer/dec", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Envelope/dec", newValue);
 
     }
     else if (paramID == "sus")
     {
-        ctrl.setParamValue("/Synthesizer/sus", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Envelope/sus", newValue);
 
     }
     else if (paramID == "rel")
     {
-        ctrl.setParamValue("/Synthesizer/rel", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Envelope/rel", newValue);
 
     }
     else if (paramID == "tFreq")
     {
-        ctrl.setParamValue("/Synthesizer/tFreq", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/tFreq", newValue);
 
     }
     else if (paramID == "tDepth")
     {
-        ctrl.setParamValue("/Synthesizer/tDepth", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/tDepth", newValue);
 
     }
     else if (paramID == "cutoff")
     {
-        ctrl.setParamValue("/Synthesizer/cutoff", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Filter/cutoff", newValue);
 
     }
     else if (paramID == "lfoF")
     {
-        ctrl.setParamValue("/Synthesizer/lfoF", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Filter/lfoF", newValue);
 
     }
     else if (paramID == "lfoD")
     {
-        ctrl.setParamValue("/Synthesizer/lfoD", newValue);
+        ctrl.setParamValue("/Synthesizer/Processing/Filter/lfoD", newValue);
 
     }
     else if (paramID == "c")
     {
-        ctrl.setParamValue("/Synthesizer/c", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/c", newValue);
 
     }
     else if (paramID == "ces")
     {
-        ctrl.setParamValue("/Synthesizer/ces", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/ces", newValue);
 
     }
     else if (paramID == "d")
     {
-        ctrl.setParamValue("/Synthesizer/d", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/d", newValue);
 
     }
     else if (paramID == "des")
     {
-        ctrl.setParamValue("/Synthesizer/des", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/des", newValue);
 
     }
     else if (paramID == "e")
     {
-        ctrl.setParamValue("/Synthesizer/e", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/e", newValue);
 
     }
     else if (paramID == "f")
     {
-        ctrl.setParamValue("/Synthesizer/f", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/f", newValue);
 
     }
     else if (paramID == "fes")
     {
-        ctrl.setParamValue("/Synthesizer/fes", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/fes", newValue);
 
     }
     else if (paramID == "g")
     {
-        ctrl.setParamValue("/Synthesizer/g", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/g", newValue);
 
     }
     else if (paramID == "ges")
     {
-        ctrl.setParamValue("/Synthesizer/ges", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/ges", newValue);
 
     }
     else if (paramID == "a")
     {
-        ctrl.setParamValue("/Synthesizer/a", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/a", newValue);
 
     }
     else if (paramID == "as")
     {
-        ctrl.setParamValue("/Synthesizer/as", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/as", newValue);
 
     }
     else if (paramID == "b")
     {
-        ctrl.setParamValue("/Synthesizer/b", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/Note Tuning/b", newValue);
 
     }
     else if (paramID == "offset")
     {
-        ctrl.setParamValue("/Synthesizer/offset", newValue);
+        ctrl.setParamValue("/Synthesizer/Tuning/offset", newValue);
 
     }
     else
