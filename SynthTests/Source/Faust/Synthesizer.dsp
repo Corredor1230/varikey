@@ -6,11 +6,15 @@ declare options "[nvoices:8]";
 declare options "[midi:on]";
 
 //Note parameters
-freq = hgroup("Pitch", nentry("freq[style:knob]",500,200,1000,0.01) : max(20));
+freq = hgroup("Pitch", nentry("freq",500,200,1000,0.01) : max(20));
 vFreq = hgroup("Pitch",vslider("vFreq",0,0,20,0.02):si.smoo);
 vDepth = hgroup("Pitch", vslider("vDepth[style:knob]",0,0,1,0.001));
 pWheel = hgroup("Pitch", hslider("pWheel",0,-1,1,0.001):si.smoo);
 detune = hgroup("Pitch", hslider("detune[midi: ctrl 1]",0,0,1,0.001));
+port = hgroup("Pitch", vslider("port", 10, 0, 1000, 1)) / 1000;
+pHasRel = hgroup("Pitch", checkbox("pHasRel"));
+pRel = hgroup("Pitch", vslider("pRel", 10, 0, 5000, 1)) / 1000;
+
 
 //Envelope/Gain parameters
 gain = hgroup("Envelope", vslider("[5]gain",-60,-60,0,1) : si.smoo: ba.db2linear);
@@ -114,8 +118,11 @@ filtSwitch(cutoff, lfo, env, switch) = filter((cutoff - lfoCtrl) * (switch == 0)
 
 
 //Alters original midi input and adds different pitch control parameters
-note = midiNote + vibrato + pWheel + notePitch with{
+note = midi + vibrato + pWheel + notePitch with{
     vibrato = lfo(vFreq, vDepth);
+    hasRelease = ((pHasRel - 1) * 10000) * -1 + pRel;
+    midi = midiNote: _ * en.adsr(port, 0.001, 1, hasRelease, gate);
+    // midi = midiNote;
 };
 
 
