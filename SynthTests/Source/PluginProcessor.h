@@ -67,6 +67,8 @@ private:
     AudioProcessorValueTreeState::ParameterLayout buildParameters();
     Synthesizer dsp;
     MapUI ctrl;
+    //Synthesizer_poly polyDsp;
+    juce_midi_handler midiHandler;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessor)
 

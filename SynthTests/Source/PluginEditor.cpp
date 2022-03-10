@@ -231,7 +231,8 @@ gateAttachment(vts, "gate", gateButton)
     gateLabel.setText("Gate", dontSendNotification);
     gateLabel.attachToComponent(&gateButton, false);
 
-    setSize (800, 800);
+    setResizable(true, true);
+    setSize (600, 600);
 }
 
 NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()
@@ -261,11 +262,11 @@ void NewProjectAudioProcessorEditor::resized()
     float horizontalMargin{ getHeight() * 0.05f };
     float totalWidth{ getWidth() - horizontalMargin };
     float totalHeight{ getHeight() - verticalMargin };
-    float midBox = totalHeight / 6;
+    float midBox = totalHeight / 7;
     float tuneSliderPos{ totalWidth / 12 };
     float tuneSliderWidth{ totalWidth / 24 };
-    float secondThird{ verticalMargin + totalHeight / 3 };
-    float finalThird{ secondThird + totalHeight / 3 };
+    float secondThird{ verticalMargin + totalHeight / 4 };
+    float finalThird{ secondThird + totalHeight / 4 };
     float tuneSliderH{ finalThird + 3 * verticalMargin };
 
 

@@ -25,6 +25,7 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                        )
 #endif
     , vts(*this, nullptr, "Params", buildParameters())
+    //,polyDsp(&dsp, 8, false, true)
 {
     vts.addParameterListener("freq", this);
     vts.addParameterListener("vFreq", this);
@@ -57,6 +58,7 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
     vts.addParameterListener("offset", this);
 
     dsp.buildUserInterface(&ctrl);
+    //polyDsp.buildUserInterface(&ctrl);
 
     for (int i = 0; i < ctrl.getParamsCount(); i++) {
         DBG(ctrl.getParamAddress(i));
@@ -323,6 +325,8 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    midiHandler.decodeBuffer(midiMessages);
 
     int nSamples = buffer.getNumSamples();
     float** data = buffer.getArrayOfWritePointers();
