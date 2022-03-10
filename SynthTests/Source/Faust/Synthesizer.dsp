@@ -1,9 +1,9 @@
 import("stdfaust.lib");
 
+//Synth Control
+
 declare options "[nvoices:8]";
 declare options "[midi:on]";
-
-//Synth Control
 
 //Note parameters
 freq = hgroup("Pitch", nentry("freq[style:knob]",500,200,1000,0.01) : max(20));
@@ -15,6 +15,7 @@ detune = hgroup("Pitch", hslider("detune[midi: ctrl 1]",0,0,1,0.001));
 //Envelope/Gain parameters
 gain = hgroup("Envelope", vslider("[5]gain",-60,-60,0,1) : si.smoo: ba.db2linear);
 gate = button("gate");
+vol = vslider("volume", -20, -60, 0, 1) : si.smoo : ba.db2linear;
 att = hgroup("Envelope", vslider("[1]att", 50, 10, 3000, 1));
 dec = hgroup("Envelope", vslider ("[2]dec", 50, 10, 3000, 1));
 sus = hgroup("Envelope", vslider ("[3]sus", 0.3, 0, 1, 0.001));
@@ -29,6 +30,15 @@ tDepth = vslider("tDepth[style:knob]",0,0,1,0.001);
 cutoff = hgroup("Filter", vslider("cutoff[style:knob][scale:log]",1000,110,20000,0.01) : si.smoo : max(20));
 lfoF = hgroup("Filter", vslider("lfoF",0,0,20,0.001));
 lfoD = hgroup("Filter", vslider("lfoD[style:knob]",0,0,1,0.01));
+filtAtt = hgroup("Filter", vslider("filtAtt", 50, 10, 3000, 1));
+filtDec = hgroup("Filter", vslider("filtDec", 50, 10, 3000, 1));
+filtSus = hgroup("Filter", vslider("filtSus", 0.5, 0, 1, 0.001));
+filtRel = hgroup("Filter", vslider("filtRel", 200, 30, 5000, 1));
+filtSw = hgroup("Filter", vslider("filtSw[style:knob]", 0, 0, 1, 1));
+
+//Other controls
+//Synth switcher
+switcher = hslider("switcher", 1, 1, 3, 1):max(1);
 
 midiNote = ba.hz2midikey(freq):int;
 
@@ -53,6 +63,7 @@ offset = vgroup("Tuning", hslider("offset[2]",0,0,11,1));
 
 // tuningSliders = hgroup("Note tuning", par(i, 12, vslider("tune", 0, -1, 1, 0.001)));
 
+
 //Identifies the MIDI input note and modifies it accordingly
 notePitch = noteDifference with{
     noteDifference = tuningSliders : par(i, 12, _ * (ma.modulo(midiNote-offset, 12) == i)) :> _;
@@ -60,7 +71,9 @@ notePitch = noteDifference with{
 
 //Takes MIDI note and detune value (in cents) and outputs stereo voice.
 voice(note, detune) = oscillator(note - detune), oscillator(note), oscillator(note + detune) : _ , (_ <: _, _ ), _ : + , + : par(i, 2, _ * 0.5) with {
-    oscillator(note) = os.sawtooth(thisFreq) with {
+    oscillator(note) = (os.sawtooth(thisFreq):_*(switcher == 1))
+                        +(os.square(thisFreq):_*(switcher == 2):_*0.6)
+                        +(os.triangle(thisFreq):_*(switcher == 3)) with {
         thisFreq = ba.midikey2hz(note);
     };
 };
@@ -68,8 +81,10 @@ voice(note, detune) = oscillator(note - detune), oscillator(note), oscillator(no
 //Creates an LFO to control other parameters.
 lfo(freq,depth) = os.osc(freq) * depth;
 
+lfoCos(freq,depth) = os.osccos(freq) * depth;
+
 //Creates an Envelope to control a signal's gain.
-envelope(att, dec, sus, rel, gate) = _ * en.adsr(attack, decay, sustain, release, gate) : _ * gate : _ / 5.5 with{
+envelope(att, dec, sus, rel, gate) = _ * en.adsr(attack, decay, sustain, release, gate) with{
     attack = att : _ / 1000 : max (0);
     decay = dec : _ / 1000 : max (0);
     sustain = sus : max (0) : min (1);
@@ -87,12 +102,16 @@ filter(freq) = fi.lowpass(3, filterFreq) : fi.lowpass(5, 18000) with {
     filterFreq = freq : min(20000) : max (20);
 };
 
-//Variable band limited filter signal for LFO control 
-lfoFilter(cutoff, lfo) = filter(cutoff+lfoVariation) with{
-    distanceToMax = 18000 - cutoff;
+filtSwitch(cutoff, lfo, env, switch) = filter((cutoff - lfoCtrl) * (switch == 0) + envCtrl * (switch ==1)) with {
+    // distanceToMax = 20000 - cutoff;
     distanceToMin = cutoff - 50;
-    lfoVariation = lfo : _ * (distanceToMax, distanceToMin : min);
+    lfoCtrl = ((lfo + 1) / 2) * distanceToMin;
+    cutoffMidi = ba.hz2midikey(cutoff);
+    envCtrlMidi = cutoffMidi : env : max(10);
+    envCtrl = ba.midikey2hz(envCtrlMidi);    
+    filtCtrl = lfoCtrl * (switch == 0) + envCtrl * (switch ==1);
 };
+
 
 //Alters original midi input and adds different pitch control parameters
 note = midiNote + vibrato + pWheel + notePitch with{
@@ -102,13 +121,11 @@ note = midiNote + vibrato + pWheel + notePitch with{
 
 masterGain(gain) = _ , _: par(i,2, _*gain);
 
-process = 
-            voice(note, detune) : 
+process =   voice(note, detune) : 
         hgroup("Processing", 
-            par(i,2, envelope(att, dec, sus, rel, gate)) : 
-            par(i, 2, lfoFilter(cutoff, lfo(lfoF, lfoD))  : 
+            par(i,2, envelope(att, dec, sus, rel, gate) : _ / 5.5) : 
+            par(i, 2, filtSwitch(cutoff, lfoCos(lfoF, lfoD), envelope(filtAtt, filtDec, filtSus, filtRel, gate), filtSw)  : 
             tremolo(tFreq))) : 
         hgroup("Processing", 
-            masterGain(gain));
-
+            masterGain(vol));
 
