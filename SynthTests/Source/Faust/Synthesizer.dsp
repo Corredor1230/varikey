@@ -1,5 +1,8 @@
 import("stdfaust.lib");
 
+declare options "[nvoices:8]";
+declare options "[midi:on]";
+
 //Synth Control
 
 //Note parameters
