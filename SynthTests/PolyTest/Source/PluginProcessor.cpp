@@ -27,9 +27,9 @@ MidiTestAudioProcessor::MidiTestAudioProcessor()
 #endif
     )
 #endif
-    , voice(new faust::SimpleSynth()), midiCtrl(&midiHandler)
-    , voiceGroup(&voice, 8, true, false)
     , vts(*this, nullptr, "Params", buildParameters())
+    , voiceGroup(new dsp_voice(new faust::SimpleSynth()), 8, false, true)
+    , midiCtrl(&midiHandler)
 {
     vts.addParameterListener("att", this);
     vts.addParameterListener("dec", this);
@@ -38,13 +38,13 @@ MidiTestAudioProcessor::MidiTestAudioProcessor()
     vts.addParameterListener("gain", this);
 
     voiceGroup.buildUserInterface(&ctrl);
+    voiceGroup.buildUserInterface(&midiCtrl);
     
     for (int i = 0; i < ctrl.getParamsCount(); i++) {
         DBG(ctrl.getParamAddress(i));
     }
-
-    voice.buildUserInterface(&midiCtrl);
-    //midiCtrl.runAllGuis();
+    
+    midiCtrl.runAllGuis();
     if (!midiCtrl.run())
         DBG("Midi couldn't start");
 }
@@ -54,23 +54,28 @@ void MidiTestAudioProcessor::parameterChanged(const juce::String& paramID, float
     DBG(paramID + String(newValue));
     if (paramID == "att")
     {
-        ctrl.setParamValue("/SimpleSynth/att", newValue);
+        ctrl.setParamValue("/Polyphonic/Voices/SimpleSynth/att", newValue);
+        voiceGroup.setParamValue("/Polyphonic/Voices/SimpleSynth/att", newValue);
     }
     else if (paramID == "sus")
     {
-        ctrl.setParamValue("/SimpleSynth/sus", newValue);
+        ctrl.setParamValue("/Polyphonic/Voices/SimpleSynth/sus", newValue);
+        voiceGroup.setParamValue("/Polyphonic/Voices/SimpleSynth/sus", newValue);
     }
     else if (paramID == "rel")
     {
-        ctrl.setParamValue("/SimpleSynth/rel", newValue);
+        ctrl.setParamValue("/Polyphonic/Voices/SimpleSynth/rel", newValue);
+        voiceGroup.setParamValue("/Polyphonic/Voices/SimpleSynth/rel", newValue);
     }
     else if (paramID == "dec")
     {
-        ctrl.setParamValue("/SimpleSynth/dec", newValue);
+        ctrl.setParamValue("/Polyphonic/Voices/SimpleSynth/dec", newValue);
+        voiceGroup.setParamValue("/Polyphonic/Voices/SimpleSynth/dec", newValue);
     }
     else if (paramID == "gain")
     {
-        ctrl.setParamValue("/SimpleSynth/gain", newValue);
+        ctrl.setParamValue("/Polyphonic/Voices/SimpleSynth/gain", newValue);
+        voiceGroup.setParamValue("/Polyphonic/Voices/SimpleSynth/gain", newValue);
     }
     else {
         DBG("Parameter Not Found");
@@ -178,7 +183,6 @@ void MidiTestAudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void MidiTestAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    voice.init(sampleRate);
     voiceGroup.init(sampleRate);
 }
 
@@ -225,8 +229,9 @@ void MidiTestAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     
     midiHandler.decodeBuffer(midiMessages);
     midiHandler.encodeBuffer(midiMessages);
-    voice.compute(buffer.getNumSamples(), nullptr, buffer.getArrayOfWritePointers());
-    voiceGroup.compute(buffer.getNumSamples(), nullptr, buffer.getArrayOfWritePointers());
+    int nSamples = buffer.getNumSamples();
+    float** data = buffer.getArrayOfWritePointers();
+    voiceGroup.compute(nSamples, nullptr, data);
 }
 
 //==============================================================================

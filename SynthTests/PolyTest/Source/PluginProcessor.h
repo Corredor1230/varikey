@@ -10,6 +10,9 @@
 
 #include <JuceHeader.h>
 #include <faust/dsp/dsp.h>
+
+#define EMCC
+
 #include <faust/dsp/poly-dsp.h>
 #include <faust/misc.h>
 #include <faust/gui/MapUI.h>
@@ -41,7 +44,7 @@ public:
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
-    void parameterChanged(const juce::String& parameterID, float newValue);
+    void parameterChanged(const juce::String& parameterID, float newValue) override;
 
 
     //==============================================================================
@@ -69,18 +72,17 @@ public:
 
 private:
     //==============================================================================
+    AudioProcessorValueTreeState::ParameterLayout buildParameters();
     
     AudioProcessorValueTreeState vts;
-    MapUI ctrl;
-
-    faust::SimpleSynth synth;
-
-    AudioProcessorValueTreeState::ParameterLayout buildParameters();
-
-    juce_midi_handler midiHandler;
-    dsp_voice voice;
+    
     mydsp_poly voiceGroup;
+    
+    juce_midi_handler midiHandler;
+    
+    faust::SimpleSynth synth;
     MidiUI midiCtrl; // Only Needed for other Midi Parameter mapping
+    MapUI ctrl;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiTestAudioProcessor)
 };
