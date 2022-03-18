@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="GmqOzd" name="SimpleMathNotSoSimple" projectType="consoleapp"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" displaySplashScreen="1"
+              jucerFormatVersion="1">
+  <MAINGROUP id="eQstA9" name="SimpleMathNotSoSimple">
+    <GROUP id="{CEBEF1C7-5D38-A3E0-98F2-E43176B4F0C0}" name="Source">
+      <FILE id="JolOBt" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="yXYzad" name="buildLibrary.sh" compile="0" resource="0" file="Source/buildLibrary.sh"/>
+      <FILE id="PCmL20" name="osc1.h" compile="0" resource="0" file="Source/osc1.h"/>
+      <FILE id="jZNoIQ" name="osc2.h" compile="0" resource="0" file="Source/osc2.h"/>
+      <FILE id="pt9JAo" name="osc3.h" compile="0" resource="0" file="Source/osc3.h"/>
+      <FILE id="uJ2fio" name="osc4.h" compile="0" resource="0" file="Source/osc4.h"/>
+      <FILE id="nwm303" name="osc5.h" compile="0" resource="0" file="Source/osc5.h"/>
+      <FILE id="AONLn7" name="osc6.h" compile="0" resource="0" file="Source/osc6.h"/>
+      <FILE id="r3Ft76" name="osc7.h" compile="0" resource="0" file="Source/osc7.h"/>
+      <GROUP id="{B3383139-5337-4673-64D5-22BBEE7332AB}" name="library">
+        <FILE id="l9YoT1" name="osc1.dsp" compile="0" resource="0" file="Source/library/osc1.dsp"/>
+        <FILE id="DC60aO" name="osc2.dsp" compile="0" resource="0" file="Source/library/osc2.dsp"/>
+        <FILE id="LiuqnP" name="osc3.dsp" compile="0" resource="0" file="Source/library/osc3.dsp"/>
+        <FILE id="kAt6mk" name="osc4.dsp" compile="0" resource="0" file="Source/library/osc4.dsp"/>
+        <FILE id="CzfmUc" name="osc5.dsp" compile="0" resource="0" file="Source/library/osc5.dsp"/>
+        <FILE id="nGAVXT" name="osc6.dsp" compile="0" resource="0" file="Source/library/osc6.dsp"/>
+        <FILE id="EeNWWS" name="osc7.dsp" compile="0" resource="0" file="Source/library/osc7.dsp"/>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="SimpleMathNotSoSimple" headerPath="/usr/local/include"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="SimpleMathNotSoSimple"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../../DevTools/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../DevTools/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../DevTools/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
