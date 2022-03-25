@@ -23,8 +23,14 @@ JuceSynthAudioProcessor::JuceSynthAudioProcessor()
 #endif
     ,vts(*this, nullptr, "Params", buildParams())
 {
+    int numVoices = 8;
+
     synth.addSound(new SynthSound());
-    synth.addVoice(new SynthVoice());
+    for (int i = 0; i < numVoices; i++)
+    {
+        synth.addVoice(new SynthVoice());
+    }
+    juce::Decibels::decibelsToGain(10);
 
 }
 
@@ -50,7 +56,35 @@ juce::AudioProcessorValueTreeState::ParameterLayout JuceSynthAudioProcessor::bui
     params.push_back(std::make_unique<juce::AudioParameterFloat>("Gain", "Gain",
         juce::NormalisableRange<float> {0.0f, 1.0f, }, 0.0f));
 
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("Osc1Wavetype",
+        "Osc1 Wavetype",
+        juce::StringArray{ "Sine", "Saw", "Square" },
+        0));
 
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("c", "cNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("ces", "cesNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("d", "dNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("des", "desNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("e", "eNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("f", "fNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("fes", "fesNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("g", "gNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("ges", "gesNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("a", "aNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("aes", "aesNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("b", "bNote",
+        juce::NormalisableRange<float>{-1.0f, 1.0f, }, 0.0f));
 
     return { params.begin(), params.end() };
 }
@@ -187,7 +221,26 @@ void JuceSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
             auto& release = *vts.getRawParameterValue("Rel");
             auto& gain = *vts.getRawParameterValue("Gain");
 
+            auto& oscWave = *vts.getRawParameterValue("Osc1Wavetype");
+
+            auto& cNote = *vts.getRawParameterValue("c");
+            auto& cesNote = *vts.getRawParameterValue("ces");
+            auto& dNote = *vts.getRawParameterValue("d");
+            auto& desNote = *vts.getRawParameterValue("des");
+            auto& eNote = *vts.getRawParameterValue("e");
+            auto& fNote = *vts.getRawParameterValue("f");
+            auto& fesNote = *vts.getRawParameterValue("fes");
+            auto& gNote = *vts.getRawParameterValue("g");
+            auto& gesNote = *vts.getRawParameterValue("ges");
+            auto& aNote = *vts.getRawParameterValue("a");
+            auto& aesNote = *vts.getRawParameterValue("aes");
+            auto& bNote = *vts.getRawParameterValue("b");
+
+
             voice->update(attack.load(), decay.load(), sustain.load(), release.load());
+            voice->getOscillator().setWaveType(oscWave);
+            voice->getTuning().alterMidiPitch(cNote, cesNote, dNote, desNote, eNote, fNote,
+                fesNote, gNote, gesNote, aNote, aesNote, bNote);
         }
 
     }

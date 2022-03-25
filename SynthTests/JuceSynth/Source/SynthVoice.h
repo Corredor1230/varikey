@@ -13,12 +13,18 @@
 #include <JuceHeader.h>
 #include "SynthSound.h"
 #include "Data/AdsrData.h"
+#include "Data/OscData.h"
+#include "Data/NoteTuning.h"
+#include <faust/misc.h>
+#include <faust/dsp/dsp.h>
+#include <faust/gui/MapUI.h>
+#include "Oscilador.h"
+#include "SimpleSynth.h"
+#include "Test.h"
 
 class SynthVoice : public juce::SynthesiserVoice
 {
 public:
-    float alterMidiPitch(int midiNoteNumber);
-    float midiToHertz(float midiNoteNumber);
     bool canPlaySound(juce::SynthesiserSound* sound) override;
     void startNote(int midiNoteNumber, float velocity, juce::SynthesiserSound* sound, int currentPitchWheelPosition) override;
     void stopNote(float velocity, bool allowTailOff) override;
@@ -28,20 +34,25 @@ public:
     void renderNextBlock(juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override;
 
     void update(const float attack, const float decay, const float sustain, const float release);
+    OscData& getOscillator() { return osc; }
+    NoteTuning& getTuning() { return tuning; }
 
 private:
+    SimpleSynth karplus;
+    Oscilador oscil;
+    Test test;
+    MapUI ctrl;
+
 
     AdsrData adsr;
 
     juce::AudioBuffer<float> synthBuffer;
 
-    juce::dsp::Oscillator<float> osc{ [](float x) {return x / juce::MathConstants<float>::pi;  } };
+    OscData osc;
+    NoteTuning tuning;
     juce::dsp::Gain<float> gain;
     bool isPrepared{ false };
 
-    //return std::sin(x); 
-    //std::sin(x)+(std::sin(2*x)/2)+(std::sin(3*x)/2); //additive
-    //return x / MathConstants<float>::pi;
-    //return x < 0.0f ? -1.0f : 1.0f;
+
 
 };

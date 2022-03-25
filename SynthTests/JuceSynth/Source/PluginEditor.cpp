@@ -11,17 +11,18 @@
 
 //==============================================================================
 JuceSynthAudioProcessorEditor::JuceSynthAudioProcessorEditor (JuceSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), adsr(audioProcessor.vts)
+    : AudioProcessorEditor (&p)
+    , audioProcessor (p)
+    , osc(audioProcessor.vts, "Osc1Wavetype")
+    , adsr(audioProcessor.vts)
 {
     setSize (400, 300);
-
-    selAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>
-        (audioProcessor.vts, "Sel", selBox);
 
     gainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
         (audioProcessor.vts, "Gain", gainSlider);
 
     addAndMakeVisible(adsr);
+    addAndMakeVisible(osc);
 
     addAndMakeVisible(gainSlider);
     gainSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
@@ -42,7 +43,8 @@ void JuceSynthAudioProcessorEditor::paint (juce::Graphics& g)
 
 void JuceSynthAudioProcessorEditor::resized()
 {
-    adsr.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight());
+    osc.setBounds(10, 10, 100, 30);
+    adsr.setBounds(getWidth() / 2, 0, getWidth() / 2, getHeight() / 2);
 
 }
 
