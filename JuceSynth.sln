@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2019
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JuceSynth - Standalone Plugin", "JuceSynth_StandalonePlugin.vcxproj", "{67F8406B-6889-2EBE-5011-C67AE801ECE8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E2A0A244-A11B-074D-4867-45C32E48AD09} = {E2A0A244-A11B-074D-4867-45C32E48AD09}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JuceSynth - VST3", "JuceSynth_VST3.vcxproj", "{1DCBBE9C-2FD8-3867-EF4E-3EF70A51C379}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E2A0A244-A11B-074D-4867-45C32E48AD09} = {E2A0A244-A11B-074D-4867-45C32E48AD09}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JuceSynth - Shared Code", "JuceSynth_SharedCode.vcxproj", "{E2A0A244-A11B-074D-4867-45C32E48AD09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DCBBE9C-2FD8-3867-EF4E-3EF70A51C379}.Debug|x64.ActiveCfg = Debug|x64
+		{1DCBBE9C-2FD8-3867-EF4E-3EF70A51C379}.Debug|x64.Build.0 = Debug|x64
+		{1DCBBE9C-2FD8-3867-EF4E-3EF70A51C379}.Release|x64.ActiveCfg = Release|x64
+		{1DCBBE9C-2FD8-3867-EF4E-3EF70A51C379}.Release|x64.Build.0 = Release|x64
+		{67F8406B-6889-2EBE-5011-C67AE801ECE8}.Debug|x64.ActiveCfg = Debug|x64
+		{67F8406B-6889-2EBE-5011-C67AE801ECE8}.Debug|x64.Build.0 = Debug|x64
+		{67F8406B-6889-2EBE-5011-C67AE801ECE8}.Release|x64.ActiveCfg = Release|x64
+		{67F8406B-6889-2EBE-5011-C67AE801ECE8}.Release|x64.Build.0 = Release|x64
+		{E2A0A244-A11B-074D-4867-45C32E48AD09}.Debug|x64.ActiveCfg = Debug|x64
+		{E2A0A244-A11B-074D-4867-45C32E48AD09}.Debug|x64.Build.0 = Debug|x64
+		{E2A0A244-A11B-074D-4867-45C32E48AD09}.Release|x64.ActiveCfg = Release|x64
+		{E2A0A244-A11B-074D-4867-45C32E48AD09}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
