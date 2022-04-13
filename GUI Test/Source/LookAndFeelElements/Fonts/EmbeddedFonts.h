@@ -28,6 +28,7 @@ public:
     juce::Font& getJosefinSans();
     void setFontSizeAndStyle(float height, const juce::String& style, 
         float horizontal, float kerning);
+    void setFontStyle(const juce::String& style);
 private:
 
     int fontStyle = 0;

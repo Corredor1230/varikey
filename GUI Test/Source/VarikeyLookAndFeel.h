@@ -11,19 +11,20 @@
 #pragma once
 
 #include<JuceHeader.h>
+#include"LookAndFeelElements/Fonts/EmbeddedFonts.h"
 
 struct ColourPalette
 {
-    std::array<int, 3> set1light;
-    std::array<int, 3> set1dark;
-    std::array<int, 3> set2light;
-    std::array<int, 3> set2dark;
+    std::array<int, 3> activeElement;
+    std::array<int, 3> inactiveElement;
+    std::array<int, 3> highlightElement;
+    std::array<int, 3> contrastDark;
     std::array<int, 3> globalLight;
     std::array<int, 3> globalDark;
 };
 
 
-class VarikeyLookAndFeel : juce::LookAndFeel_V4
+class VarikeyLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
 
@@ -31,17 +32,23 @@ public:
     {
         vaporwave = 0,
         clean,
-        dark,
+        darkPalette,
         vintagePC,
         tech
     };
 
     VarikeyLookAndFeel();
+    ~VarikeyLookAndFeel() override;
+
     void setSliderPalette(ColourPalette palette, float alpha);
+    ColourPalette getColourPalette(palette paletteType);
+    void setColourPalette(palette paletteType);
+    void buildSliders();
 
-private:
+    void setFont(juce::Font& font);
 
-    ColourPalette loadColourPalettes(palette paletteType);
+private: 
+
     struct ColourPalette currentPalette;
 
     //Colour Palettes
@@ -62,5 +69,8 @@ private:
     std::array<int, 3> almostWhite{ 243, 243, 243 };
     //Black
 
+
+    //Fonts
+    EmbeddedFonts josefinSans;
 };
 

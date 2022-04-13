@@ -95,3 +95,35 @@ void EmbeddedFonts::setFontSizeAndStyle(float height, const juce::String& style,
         fontStyle = regular;
     }
 }
+
+/*Possible style strings
+* "plain", "bold", "italic",
+* "medium", "semi"
+for font style */
+void EmbeddedFonts::setFontStyle(const juce::String& style)
+{
+    if (style == "plain")
+    {
+        fontStyle = regular;
+    }
+    else if (style == "bold")
+    {
+        fontStyle = bold;
+    }
+    else if (style == "italic")
+    {
+        fontStyle = italic;
+    }
+    else if (style == "medium")
+    {
+        fontStyle = medium;
+    }
+    else if (style == "Semibold")
+    {
+        fontStyle = semi;
+    }
+    else
+    {
+        fontStyle = regular;
+    }
+}

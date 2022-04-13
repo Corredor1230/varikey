@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "LookAndFeelElements/Fonts/EmbeddedFonts.h"
 #include "Global Components/TuningComponent.h"
+#include "VarikeyLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -20,8 +21,6 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void changeAllSlidersColour(std::array<int, 3> track, std::array<int, 3> stem, std::array<int, 3> thumb, float alpha);
-
 private:
     //==============================================================================
     // Your private member variables go here...
@@ -38,6 +37,8 @@ private:
 
     EmbeddedFonts josefinSans;
     TuningComponent tuner;
+
+    VarikeyLookAndFeel varikeyLookAndFeel;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
