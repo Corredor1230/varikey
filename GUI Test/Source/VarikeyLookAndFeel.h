@@ -22,22 +22,45 @@ struct ColourPalette
     std::array<int, 3> globalDark;
 };
 
+
 class VarikeyLookAndFeel : juce::LookAndFeel_V4
 {
 public:
+
+    enum palette
+    {
+        vaporwave = 0,
+        clean,
+        dark,
+        vintagePC,
+        tech
+    };
+
     VarikeyLookAndFeel();
+    void setColourPalette(palette paletteType);
 
 private:
 
-    struct ColourPalette vaporwave;
+    ColourPalette loadColourPalettes(palette paletteType);
+    struct ColourPalette currentPalette;
 
-    //Colour Palette
+    //Colour Palettes
 
-    std::array<int, 3> teal{ 109, 237, 230 };
+    //Vaporwave Palette
     std::array<int, 3> cyan{ 174, 235, 254 };
     std::array<int, 3> purp{ 105, 98, 212 };
     std::array<int, 3> pink{ 253, 169, 247 };
     std::array<int, 3> pale{ 234, 246, 242 };
     std::array<int, 3> dark{ 45, 35, 82 };
+    std::array<int, 3> black{ 0, 0, 0 };
+
+    //Clean Palette
+    std::array<int, 3> orange{ 255, 65, 102 };
+    std::array<int, 3> midGrey{ 88, 88, 88 };
+    std::array<int, 3> lightGrey{ 139, 139, 139 };
+    std::array<int, 3> darkGrey{ 42, 42, 42 };
+    std::array<int, 3> almostWhite{ 243, 243, 243 };
+    //Black
 
 };
+
