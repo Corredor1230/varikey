@@ -37,7 +37,7 @@ public:
     };
 
     VarikeyLookAndFeel();
-    void setColourPalette(palette paletteType);
+    void setSliderPalette(ColourPalette palette, float alpha);
 
 private:
 
@@ -45,7 +45,7 @@ private:
     struct ColourPalette currentPalette;
 
     //Colour Palettes
-
+    float sliderAlpha = 0.9;
     //Vaporwave Palette
     std::array<int, 3> cyan{ 174, 235, 254 };
     std::array<int, 3> purp{ 105, 98, 212 };
