@@ -43,16 +43,16 @@ public:
     void setSliderPalette(ColourPalette palette, float alpha);
     ColourPalette getColourPalette(palette paletteType);
     void setColourPalette(palette paletteType);
-    void buildSliders();
-
-    void setFont(juce::Font& font);
+    void setComponentPalette(ColourPalette palette, float alpha);
 
 private: 
+
 
     struct ColourPalette currentPalette;
 
     //Colour Palettes
     float sliderAlpha = 0.9;
+    float componentAlpha = 1.0;
     //Vaporwave Palette
     std::array<int, 3> cyan{ 174, 235, 254 };
     std::array<int, 3> purp{ 105, 98, 212 };

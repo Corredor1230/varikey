@@ -42,7 +42,7 @@ void TuningComponent::paint (juce::Graphics& g)
        You should replace everything in this method with your own
        drawing code..
     */
-    g.setColour(juce::Colour::Colour());
+    g.setColour(juce::Colour());
 
 }
 

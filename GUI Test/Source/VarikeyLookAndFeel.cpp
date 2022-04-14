@@ -78,3 +78,20 @@ void VarikeyLookAndFeel::setColourPalette(palette paletteType)
 {
     currentPalette = getColourPalette(paletteType);
 }
+
+void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
+{
+    //ToggleButton Colour
+    setColour(juce::ToggleButton::ColourIds::textColourId, juce::Colour((juce::uint8)palette.globalDark[0],
+        palette.globalDark[1], palette.globalDark[2], alpha));
+    setColour(juce::ToggleButton::ColourIds::tickColourId, juce::Colour((juce::uint8)palette.activeElement[0],
+        palette.activeElement[1], palette.activeElement[2], alpha));
+    setColour(juce::ToggleButton::ColourIds::tickDisabledColourId, juce::Colour((juce::uint8)palette.inactiveElement[0],
+        palette.inactiveElement[1], palette.inactiveElement[2], alpha));
+
+    //TabbedComponent Colour
+    setColour(juce::TabbedComponent::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.contrastDark[0],
+        palette.contrastDark[1], palette.contrastDark[2], alpha));
+    setColour(juce::TabbedComponent::ColourIds::outlineColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
+        palette.highlightElement[1], palette.highlightElement[2], alpha));
+}
