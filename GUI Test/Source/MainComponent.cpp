@@ -3,6 +3,8 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
+    varikeyLookAndFeel.setColourPalette(VarikeyLookAndFeel::palette::vaporwave);
+    setLookAndFeel(&varikeyLookAndFeel);
     addAndMakeVisible(tuner);
     setSize (600, 400);
 }
@@ -16,8 +18,7 @@ MainComponent::~MainComponent()
 void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (juce::Colours::black);
-    setLookAndFeel(&varikeyLookAndFeel);
+    g.fillAll(varikeyLookAndFeel.getColourFromPalette(VarikeyLookAndFeel::paletteColours::gDark));
     josefinSans.setFontSizeAndStyle(60.f, "semi", 1.f, 0.f);
     g.setFont (josefinSans.getJosefinSans());
     g.setColour (juce::Colours::white);

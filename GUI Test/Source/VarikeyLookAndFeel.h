@@ -37,13 +37,24 @@ public:
         tech
     };
 
+    enum paletteColours
+    {
+        active = 0,
+        inactive,
+        highlight,
+        contrast,
+        gLight,
+        gDark
+    };
+
     VarikeyLookAndFeel();
     ~VarikeyLookAndFeel() override;
 
-    void setSliderPalette(ColourPalette palette, float alpha);
-    ColourPalette getColourPalette(palette paletteType);
+    void setSliderPalette(ColourPalette palette, float alpha = 0.9f);
     void setColourPalette(palette paletteType);
-    void setComponentPalette(ColourPalette palette, float alpha);
+    void setComponentPalette(ColourPalette palette, float alpha = 1.0f);
+    ColourPalette getColourPalette(palette paletteType);
+    juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
 
 private: 
 

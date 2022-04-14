@@ -14,7 +14,8 @@
 VarikeyLookAndFeel::VarikeyLookAndFeel()
 {
     currentPalette = getColourPalette(vaporwave);
-    setSliderPalette(currentPalette, sliderAlpha);
+    setSliderPalette(currentPalette);
+    setComponentPalette(currentPalette);
 }
 
 VarikeyLookAndFeel::~VarikeyLookAndFeel()
@@ -46,6 +47,10 @@ ColourPalette VarikeyLookAndFeel::getColourPalette(palette paletteType)
     }
 }
 
+/*
+Sets current palette to sliders globally.
+Alpha must be manually introduced for this function.
+*/
 void VarikeyLookAndFeel::setSliderPalette(ColourPalette palette, float alpha)
 {
     typedef juce::Slider::ColourIds colourIds;
@@ -79,6 +84,9 @@ void VarikeyLookAndFeel::setColourPalette(palette paletteType)
     currentPalette = getColourPalette(paletteType);
 }
 
+/*
+ Sets colours from current palette for various buttons and components.
+*/
 void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
 {
     //ToggleButton Colour
@@ -94,4 +102,46 @@ void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
         palette.contrastDark[1], palette.contrastDark[2], alpha));
     setColour(juce::TabbedComponent::ColourIds::outlineColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
         palette.highlightElement[1], palette.highlightElement[2], alpha));
+}
+
+/*
+ String with possible colours from a standardized colour palette.
+ Possible enums: active, inactive, highlight 
+ contrast, gLight, gDark.
+ Alpha parameter is optional.
+ Returns colours from current palette.
+*/
+juce::Colour VarikeyLookAndFeel::getColourFromPalette(paletteColours colour, float alpha)
+{
+
+    switch (colour)
+    {
+    case 0:
+        juce::Colour activeColour((juce::uint8)currentPalette.activeElement[0],
+            currentPalette.activeElement[1], currentPalette.activeElement[2], alpha);
+        return activeColour;
+    case 1:
+        juce::Colour inactiveColour((juce::uint8)currentPalette.inactiveElement[0],
+            currentPalette.inactiveElement[1], currentPalette.inactiveElement[2], alpha);
+        return inactiveColour;
+    case 2:
+        juce::Colour highlightColour((juce::uint8)currentPalette.highlightElement[0],
+            currentPalette.highlightElement[1], currentPalette.highlightElement[2], alpha);
+        return highlightColour;
+    case 3:
+        juce::Colour contrastColour((juce::uint8)currentPalette.contrastDark[0],
+            currentPalette.contrastDark[1], currentPalette.contrastDark[2], alpha);
+        return activeColour;
+    case 4:
+        juce::Colour gLightColour((juce::uint8)currentPalette.globalLight[0],
+            currentPalette.globalLight[1], currentPalette.globalLight[2], alpha);
+        return gLightColour;
+    case 5:
+        juce::Colour gDarkColour((juce::uint8)currentPalette.globalDark[0],
+            currentPalette.globalDark[1], currentPalette.globalDark[2], alpha);
+        return gDarkColour;
+    default:
+        jassertfalse;
+    }
+
 }
