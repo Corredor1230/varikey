@@ -27,7 +27,7 @@ public:
         horizontal
     };
 
-    TuningComponent(EmbeddedFonts font);
+    TuningComponent();
     ~TuningComponent() override;
 
     void paint (juce::Graphics&) override;
@@ -56,6 +56,10 @@ private:
     juce::Slider slider10;
     juce::Slider slider11;
     juce::Slider transposeSlider;
+    juce::ToggleButton keyBreakToggle;
+    int transposeTextBoxWidth;
+    int transposeTextBoxHeight;
+    juce::DrawableRectangle valueOutline;
 
     juce::Label label0;
     juce::Label label1;
@@ -70,6 +74,10 @@ private:
     juce::Label label10;
     juce::Label label11;
     juce::Label transposeLabel;
+    juce::Label titleLabel;
+    juce::Label keyBreakLabel;
+    juce::Label keyBreakValue;
+    juce::Label breakLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TuningComponent)
 };

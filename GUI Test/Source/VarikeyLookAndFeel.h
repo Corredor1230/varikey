@@ -47,14 +47,14 @@ public:
         gDark
     };
 
-    VarikeyLookAndFeel();
+    VarikeyLookAndFeel(palette paletteType);
     ~VarikeyLookAndFeel() override;
 
     void setSliderPalette(ColourPalette palette, float alpha = 0.95f);
     void setColourPalette(palette paletteType);
     void setComponentPalette(ColourPalette palette, float alpha = 1.0f);
     void setFont(juce::Font& font);
-    void setDistanceToSlider(float distance);
+    void setDistanceToSlider(float distance, juce::String& type);
 
     //Overriding look and feel to create new defaults
     juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
@@ -62,7 +62,7 @@ public:
     juce::BorderSize<int> getLabelBorderSize(juce::Label&) override;
     
     
-    ColourPalette getColourPalette(palette paletteType);
+    ColourPalette getColourPalette(palette paletteType = vaporwave);
     juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
     
 
@@ -74,7 +74,8 @@ private:
     //Colour Palettes
     float sliderAlpha = 0.9;
     float componentAlpha = 1.0;
-    float distanceToSlider = 7.0;
+    float verticalDistanceToSlider = 7.0;
+    float horizontalDistanceToSlider = 7.0;
     //Vaporwave Palette
     std::array<int, 3> cyan{ 174, 235, 254 };
     std::array<int, 3> purp{ 105, 98, 212 };

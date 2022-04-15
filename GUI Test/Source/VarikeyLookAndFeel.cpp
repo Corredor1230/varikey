@@ -11,10 +11,12 @@
 #include<JuceHeader.h>
 #include "VarikeyLookAndFeel.h"
 
-VarikeyLookAndFeel::VarikeyLookAndFeel()
+VarikeyLookAndFeel::VarikeyLookAndFeel(palette paletteType)
 {
-    currentPalette = getColourPalette(vaporwave);
-    josefinSans.setFontSizeAndStyle(22.0f, "semi", 1.0f, 0.0f);
+    currentPalette = getColourPalette(paletteType);
+    //These parameters define the font for most components
+    //Modify them wisely!
+    josefinSans.setFontSizeAndStyle(22.0f, "medium", 1.0f, 0.0f);
     customFont = josefinSans.getCurrentFont();
     setDefaultSansSerifTypeface(josefinSans.getCurrentTypeface());
     setSliderPalette(currentPalette);
@@ -44,7 +46,7 @@ ColourPalette VarikeyLookAndFeel::getColourPalette(palette paletteType)
         ColourPalette clean;
         clean.activeElement = orange;
         clean.inactiveElement = midGrey;
-        clean.highlightElement = lightGrey;
+        clean.highlightElement = pale;
         clean.contrastDark = darkGrey;
         clean.globalLight = almostWhite;
         clean.globalDark = black;
@@ -185,9 +187,10 @@ juce::BorderSize<int> VarikeyLookAndFeel::getLabelBorderSize(juce::Label& label)
 }
 
 
-void VarikeyLookAndFeel::setDistanceToSlider(float distance)
+void VarikeyLookAndFeel::setDistanceToSlider(float distance, juce::String& type)
 {
-    distanceToSlider = distance;
+    if (type == "vertical") verticalDistanceToSlider = distance;
+    else if (type == "horizontal") horizontalDistanceToSlider = distance;
 }
 
 
@@ -205,7 +208,7 @@ juce::Slider::SliderLayout VarikeyLookAndFeel::getSliderLayout(juce::Slider& sli
     else
         minYSpace = 15;
 
-    auto localBounds = slider.getLocalBounds();
+    juce::Rectangle<int> localBounds = slider.getLocalBounds();
 
     auto textBoxWidth = juce::jmax(0, juce::jmin(slider.getTextBoxWidth(), localBounds.getWidth() - minXSpace));
     auto textBoxHeight = juce::jmax(0, juce::jmin(slider.getTextBoxHeight(), localBounds.getHeight() - minYSpace));
@@ -225,7 +228,10 @@ juce::Slider::SliderLayout VarikeyLookAndFeel::getSliderLayout(juce::Slider& sli
             layout.textBoxBounds.setWidth(textBoxWidth);
             layout.textBoxBounds.setHeight(textBoxHeight);
 
-            if (textBoxPos == juce::Slider::TextBoxLeft)           layout.textBoxBounds.setX(0);
+            if (textBoxPos == juce::Slider::TextBoxLeft) { 
+                layout.textBoxBounds.setX(0);
+                layout.textBoxBounds.removeFromBottom(3);
+            }
             else if (textBoxPos == juce::Slider::TextBoxRight)     layout.textBoxBounds.setX(localBounds.getWidth() - textBoxWidth);
             else /* above or below -> centre horizontally */ layout.textBoxBounds.setX((localBounds.getWidth() - textBoxWidth) / 2);
 
@@ -245,10 +251,10 @@ juce::Slider::SliderLayout VarikeyLookAndFeel::getSliderLayout(juce::Slider& sli
     }
     else
     {
-        if (textBoxPos == juce::Slider::TextBoxLeft)       layout.sliderBounds.removeFromLeft(textBoxWidth);
+        if (textBoxPos == juce::Slider::TextBoxLeft)       layout.sliderBounds.removeFromLeft(textBoxWidth - 15 + horizontalDistanceToSlider);
         else if (textBoxPos == juce::Slider::TextBoxRight) layout.sliderBounds.removeFromRight(textBoxWidth);
         else if (textBoxPos == juce::Slider::TextBoxAbove) layout.sliderBounds.removeFromTop(textBoxHeight);
-        else if (textBoxPos == juce::Slider::TextBoxBelow) layout.sliderBounds.removeFromBottom(textBoxHeight - 15 + distanceToSlider);
+        else if (textBoxPos == juce::Slider::TextBoxBelow) layout.sliderBounds.removeFromBottom(textBoxHeight - 15 + verticalDistanceToSlider);
 
         const int thumbIndent = getSliderThumbRadius(slider);
 

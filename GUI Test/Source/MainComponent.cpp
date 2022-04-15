@@ -1,14 +1,14 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent() : tuner(josefinSans)
+MainComponent::MainComponent() : 
+    varikeyLookAndFeel(VarikeyLookAndFeel::palette::clean)
 {
-    varikeyLookAndFeel.setColourPalette(VarikeyLookAndFeel::palette::vaporwave);
     setLookAndFeel(&varikeyLookAndFeel);
     addAndMakeVisible(tuner);
     josefinSans.setFontSizeAndStyle(60.f, "plain", 1.f, 0.f);
     tuner.setCustomLookAndFeel(&varikeyLookAndFeel);
-    setSize (600, 400);
+    setSize (600, 600);
 }
 
 MainComponent::~MainComponent()
