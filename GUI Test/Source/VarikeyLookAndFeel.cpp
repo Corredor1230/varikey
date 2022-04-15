@@ -14,11 +14,13 @@
 VarikeyLookAndFeel::VarikeyLookAndFeel()
 {
     currentPalette = getColourPalette(vaporwave);
-    josefinSans.setFontSizeAndStyle(20.0f, "semi", 1.0f, 0.0f);
+    josefinSans.setFontSizeAndStyle(22.0f, "semi", 1.0f, 0.0f);
     customFont = josefinSans.getCurrentFont();
     setDefaultSansSerifTypeface(josefinSans.getCurrentTypeface());
     setSliderPalette(currentPalette);
     setComponentPalette(currentPalette);
+    labelBorder.setBottom(0);
+    labelBorder.setTop(0);
 }
 
 VarikeyLookAndFeel::~VarikeyLookAndFeel()
@@ -33,9 +35,9 @@ ColourPalette VarikeyLookAndFeel::getColourPalette(palette paletteType)
         ColourPalette vaporwave;
         vaporwave.activeElement = pink;
         vaporwave.inactiveElement= purp;
-        vaporwave.highlightElement = cyan;
+        vaporwave.highlightElement = pale;
         vaporwave.contrastDark= dark;
-        vaporwave.globalLight = pale;
+        vaporwave.globalLight = cyan;
         vaporwave.globalDark = black;
         return vaporwave;
     case 1:
@@ -82,6 +84,7 @@ void VarikeyLookAndFeel::setSliderPalette(ColourPalette palette, float alpha)
     setColour(juce::TextEditor::ColourIds::textColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
         palette.highlightElement[1], palette.highlightElement[2], alpha));
 
+
 }
 
 void VarikeyLookAndFeel::setColourPalette(palette paletteType)
@@ -106,6 +109,9 @@ void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
     setColour(juce::TabbedComponent::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.contrastDark[0],
         palette.contrastDark[1], palette.contrastDark[2], alpha));
     setColour(juce::TabbedComponent::ColourIds::outlineColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
+        palette.highlightElement[1], palette.highlightElement[2], alpha));
+
+    setColour(juce::Label::ColourIds::textColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
         palette.highlightElement[1], palette.highlightElement[2], alpha));
 
     setColour(juce::ResizableWindow::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.globalDark[0],
@@ -160,6 +166,7 @@ juce::Colour VarikeyLookAndFeel::getColourFromPalette(paletteColours colour, flo
 
 }
 
+
 void VarikeyLookAndFeel::setFont(juce::Font& font)
 {
     customFont = font;
@@ -168,4 +175,86 @@ void VarikeyLookAndFeel::setFont(juce::Font& font)
 juce::Font VarikeyLookAndFeel::getLabelFont(juce::Label& label)
 {
     return customFont;
+}
+
+juce::BorderSize<int> VarikeyLookAndFeel::getLabelBorderSize(juce::Label& label)
+{
+    labelBorder = juce::BorderSize<int>::BorderSize(0, 0, 0, 0);
+    label.setBorderSize(labelBorder);
+    return label.getBorderSize();
+}
+
+
+void VarikeyLookAndFeel::setDistanceToSlider(float distance)
+{
+    distanceToSlider = distance;
+}
+
+
+juce::Slider::SliderLayout VarikeyLookAndFeel::getSliderLayout(juce::Slider& slider)
+{
+    // 1. compute the actually visible textBox size from the slider textBox size and some additional constraints
+
+    int minXSpace = 0;
+    int minYSpace = 0;
+
+    auto textBoxPos = slider.getTextBoxPosition();
+
+    if (textBoxPos == juce::Slider::TextBoxLeft || textBoxPos == juce::Slider::TextBoxRight)
+        minXSpace = 30;
+    else
+        minYSpace = 15;
+
+    auto localBounds = slider.getLocalBounds();
+
+    auto textBoxWidth = juce::jmax(0, juce::jmin(slider.getTextBoxWidth(), localBounds.getWidth() - minXSpace));
+    auto textBoxHeight = juce::jmax(0, juce::jmin(slider.getTextBoxHeight(), localBounds.getHeight() - minYSpace));
+
+    juce::Slider::SliderLayout layout;
+
+    // 2. set the textBox bounds
+
+    if (textBoxPos != juce::Slider::NoTextBox)
+    {
+        if (slider.isBar())
+        {
+            layout.textBoxBounds = localBounds;
+        }
+        else
+        {
+            layout.textBoxBounds.setWidth(textBoxWidth);
+            layout.textBoxBounds.setHeight(textBoxHeight);
+
+            if (textBoxPos == juce::Slider::TextBoxLeft)           layout.textBoxBounds.setX(0);
+            else if (textBoxPos == juce::Slider::TextBoxRight)     layout.textBoxBounds.setX(localBounds.getWidth() - textBoxWidth);
+            else /* above or below -> centre horizontally */ layout.textBoxBounds.setX((localBounds.getWidth() - textBoxWidth) / 2);
+
+            if (textBoxPos == juce::Slider::TextBoxAbove)          layout.textBoxBounds.setY(0);
+            else if (textBoxPos == juce::Slider::TextBoxBelow)     layout.textBoxBounds.setY(localBounds.getHeight() - textBoxHeight);
+            else /* left or right -> centre vertically */    layout.textBoxBounds.setY((localBounds.getHeight() - textBoxHeight) / 2);
+        }
+    }
+
+    // 3. set the slider bounds
+
+    layout.sliderBounds = localBounds;
+
+    if (slider.isBar())
+    {
+        layout.sliderBounds.reduce(1, 1);   // bar border
+    }
+    else
+    {
+        if (textBoxPos == juce::Slider::TextBoxLeft)       layout.sliderBounds.removeFromLeft(textBoxWidth);
+        else if (textBoxPos == juce::Slider::TextBoxRight) layout.sliderBounds.removeFromRight(textBoxWidth);
+        else if (textBoxPos == juce::Slider::TextBoxAbove) layout.sliderBounds.removeFromTop(textBoxHeight);
+        else if (textBoxPos == juce::Slider::TextBoxBelow) layout.sliderBounds.removeFromBottom(textBoxHeight - 15 + distanceToSlider);
+
+        const int thumbIndent = getSliderThumbRadius(slider);
+
+        if (slider.isHorizontal())    layout.sliderBounds.reduce(thumbIndent, 0);
+        else if (slider.isVertical()) layout.sliderBounds.reduce(0, thumbIndent);
+    }
+
+    return layout;
 }

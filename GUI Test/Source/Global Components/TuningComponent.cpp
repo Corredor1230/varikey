@@ -14,11 +14,8 @@
 //==============================================================================
 TuningComponent::TuningComponent(EmbeddedFonts font)
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-    //tuningFont = fonts.getJosefinSans();
-    customFont = font.getJosefinSans();
-    customFont.setSizeAndStyle(20.f, "plain", 1.0f, 0.0f);
+    addAndMakeVisible(transposeSlider);
+    addAndMakeVisible(transposeLabel);
     setSliderParams(slider0, label0, "Test", vertical);
     setSliderParams(slider1, label1, "This", vertical);
     setSliderParams(slider2, label2, "Font", vertical);
@@ -41,21 +38,24 @@ TuningComponent::~TuningComponent()
 void TuningComponent::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colour());
-    g.setFont(customFont);
+    juce::Rectangle<float> border;
+    border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
+    g.setColour(slider0.findColour(juce::Slider::ColourIds::backgroundColourId));
+    g.drawRect(border, 1.0f);
 }
 
 void TuningComponent::resized()
 {
-    getBounds().reduced(10, 10);
-    int height = getHeight();
-    int width = getWidth();
+    auto bounds = getBounds().reduced(5, 5);
+    int height = bounds.getHeight();
+    int width = bounds.getWidth();
     int padding = 10;
-    int sliderLabel = height / 9;
-    int title = height / 9;
-    int sliderHeight = height - sliderLabel - title;
+    int sliderLabel = height / 7;
+    int title = height / 7;
+    int sliderHeight = height - title - sliderLabel;
     int sliderWidth = (width / 12) - padding;
     int sliderStartX = padding;
-    int sliderStartY = sliderLabel + title;
+    int sliderStartY = title + sliderLabel;
 
     slider0.setBounds(sliderStartX, sliderStartY, sliderWidth, sliderHeight);
     slider1.setBounds(slider0.getRight() + padding, sliderStartY, sliderWidth, sliderHeight);
@@ -77,12 +77,10 @@ void TuningComponent::setSliderParams(juce::Slider& slider, juce::Label& label, 
     addAndMakeVisible(slider);
     addAndMakeVisible(label);
     slider.setNormalisableRange(juce::NormalisableRange<double>(-1.0, 1.0, 0.01));
-    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 25);
-    label.setFont(customFont);
+    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
     label.setText(name, juce::dontSendNotification);
     label.setJustificationType(juce::Justification::centred);
     label.attachToComponent(&slider, false);
-    //label.setFont(tuningFont);
 
     switch (style)
     {

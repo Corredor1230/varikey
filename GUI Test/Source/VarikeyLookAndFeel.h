@@ -54,9 +54,14 @@ public:
     void setColourPalette(palette paletteType);
     void setComponentPalette(ColourPalette palette, float alpha = 1.0f);
     void setFont(juce::Font& font);
+    void setDistanceToSlider(float distance);
 
     //Overriding look and feel to create new defaults
-    juce::Font getLabelFont(juce::Label& label) override;
+    juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
+    juce::Font getLabelFont(juce::Label&) override;
+    juce::BorderSize<int> getLabelBorderSize(juce::Label&) override;
+    
+    
     ColourPalette getColourPalette(palette paletteType);
     juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
     
@@ -69,6 +74,7 @@ private:
     //Colour Palettes
     float sliderAlpha = 0.9;
     float componentAlpha = 1.0;
+    float distanceToSlider = 7.0;
     //Vaporwave Palette
     std::array<int, 3> cyan{ 174, 235, 254 };
     std::array<int, 3> purp{ 105, 98, 212 };
@@ -89,5 +95,8 @@ private:
     //Fonts
     juce::Font customFont;
     EmbeddedFonts josefinSans;
+
+    //Shapes
+    juce::BorderSize<int> labelBorder;
 };
 

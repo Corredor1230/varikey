@@ -55,6 +55,7 @@ private:
     juce::Slider slider9;
     juce::Slider slider10;
     juce::Slider slider11;
+    juce::Slider transposeSlider;
 
     juce::Label label0;
     juce::Label label1;
@@ -68,6 +69,7 @@ private:
     juce::Label label9;
     juce::Label label10;
     juce::Label label11;
+    juce::Label transposeLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TuningComponent)
 };
