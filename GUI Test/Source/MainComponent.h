@@ -1,7 +1,9 @@
 #pragma once
 
 #include <JuceHeader.h>
+#ifndef EMBEDDEDFONTS_H
 #include "LookAndFeelElements/Fonts/EmbeddedFonts.h"
+#endif
 #include "Global Components/TuningComponent.h"
 #include "VarikeyLookAndFeel.h"
 

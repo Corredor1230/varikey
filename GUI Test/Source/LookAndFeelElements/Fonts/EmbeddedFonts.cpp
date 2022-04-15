@@ -13,20 +13,7 @@
 EmbeddedFonts::EmbeddedFonts()
 {
     //JosefinSans typeface initialization
-    josefinSansRegular = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansRegular_ttf,
-        BinaryData::JosefinSansRegular_ttfSize));
-
-    josefinSansBold = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansBold_ttf,
-        BinaryData::JosefinSansBold_ttfSize));
-
-    josefinSansItalic = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansItalic_ttf,
-        BinaryData::JosefinSansItalic_ttfSize));
-
-    josefinSansMedium = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansMedium_ttf,
-        BinaryData::JosefinSansMedium_ttfSize));
-
-    josefinSansSemi = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansSemiBold_ttf,
-        BinaryData::JosefinSansSemiBold_ttfSize));
+    loadFontAndTypeface();
 }
 
 /*
@@ -66,32 +53,44 @@ void EmbeddedFonts::setFontSizeAndStyle(float height, const juce::String& style,
 {
     if (style == "plain")
     {
+        currentTypeface = jSansRegularTypeface;
         josefinSansRegular.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansRegular;
         fontStyle = regular;
     }
     else if (style == "bold")
     {
+        currentTypeface = jSansBoldTypeface;
         josefinSansBold.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansBold;
         fontStyle = bold;
     }
     else if (style == "italic")
     {
+        currentTypeface = jSansItalicTypeface;
         josefinSansItalic.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansItalic;
         fontStyle = italic;
     }
     else if (style == "medium")
     {
+        currentTypeface = jSansMediumTypeface;
         josefinSansMedium.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansMedium;
         fontStyle = medium;
     }
     else if (style == "Semibold")
     {
+        currentTypeface = jSansSemiTypeface;
         josefinSansSemi.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansSemi;
         fontStyle = semi;
     }
     else
     {
+        currentTypeface = jSansRegularTypeface;
         josefinSansRegular.setSizeAndStyle(height, 0, horizontal, kerning);
+        currentFont = josefinSansRegular;
         fontStyle = regular;
     }
 }
@@ -126,4 +125,38 @@ void EmbeddedFonts::setFontStyle(const juce::String& style)
     {
         fontStyle = regular;
     }
+}
+
+/*Returns current font as a juce::Font object*/
+juce::Font& EmbeddedFonts::getCurrentFont()
+{
+    return currentFont;
+}
+
+juce::Typeface::Ptr EmbeddedFonts::getCurrentTypeface()
+{
+    return currentTypeface;
+}
+
+void EmbeddedFonts::loadFontAndTypeface()
+{
+    jSansRegularTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansRegular_ttf,
+        BinaryData::JosefinSansRegular_ttfSize);
+    josefinSansRegular = juce::Font(jSansRegularTypeface);
+
+    jSansBoldTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansBold_ttf,
+        BinaryData::JosefinSansBold_ttfSize);
+    josefinSansBold = juce::Font(jSansBoldTypeface);
+
+    jSansItalicTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansItalic_ttf,
+        BinaryData::JosefinSansItalic_ttfSize);
+    josefinSansItalic = juce::Font(jSansItalicTypeface);
+
+    jSansMediumTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansMedium_ttf,
+        BinaryData::JosefinSansMedium_ttfSize);
+    josefinSansMedium = juce::Font(jSansMediumTypeface);
+
+    jSansSemiTypeface = juce::Typeface::createSystemTypefaceFor(BinaryData::JosefinSansSemiBold_ttf,
+        BinaryData::JosefinSansSemiBold_ttfSize);
+    josefinSansSemi = juce::Font(jSansSemiTypeface);
 }

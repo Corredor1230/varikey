@@ -14,6 +14,9 @@
 VarikeyLookAndFeel::VarikeyLookAndFeel()
 {
     currentPalette = getColourPalette(vaporwave);
+    josefinSans.setFontSizeAndStyle(20.0f, "semi", 1.0f, 0.0f);
+    customFont = josefinSans.getCurrentFont();
+    setDefaultSansSerifTypeface(josefinSans.getCurrentTypeface());
     setSliderPalette(currentPalette);
     setComponentPalette(currentPalette);
 }
@@ -73,9 +76,11 @@ void VarikeyLookAndFeel::setSliderPalette(ColourPalette palette, float alpha)
     setColour(colourIds::textBoxBackgroundColourId, juce::Colour());
     setColour(colourIds::textBoxHighlightColourId, juce::Colour((juce::uint8)palette.activeElement[0],
         palette.activeElement[1], palette.activeElement[2], alpha));
-    setColour(colourIds::textBoxOutlineColourId, juce::Colour());
-    setColour(colourIds::textBoxTextColourId, juce::Colour((juce::uint8)palette.globalDark[0],
-        palette.globalDark[1], palette.globalDark[2], alpha));
+    setColour(colourIds::textBoxOutlineColourId, juce::Colour((juce::uint8)0, 0, 0, 0.f));
+    setColour(colourIds::textBoxTextColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
+        palette.highlightElement[1], palette.highlightElement[2], alpha));
+    setColour(juce::TextEditor::ColourIds::textColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
+        palette.highlightElement[1], palette.highlightElement[2], alpha));
 
 }
 
@@ -102,6 +107,9 @@ void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
         palette.contrastDark[1], palette.contrastDark[2], alpha));
     setColour(juce::TabbedComponent::ColourIds::outlineColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
         palette.highlightElement[1], palette.highlightElement[2], alpha));
+
+    setColour(juce::ResizableWindow::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.globalDark[0],
+        palette.globalDark[1], palette.globalDark[2], alpha));
 }
 
 /*
@@ -113,35 +121,51 @@ void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
 */
 juce::Colour VarikeyLookAndFeel::getColourFromPalette(paletteColours colour, float alpha)
 {
+    juce::Colour activeColour;
+    juce::Colour inactiveColour;
+    juce::Colour highlightColour;
+    juce::Colour contrastColour;
+    juce::Colour gLightColour;
+    juce::Colour gDarkColour;
 
     switch (colour)
     {
     case 0:
-        juce::Colour activeColour((juce::uint8)currentPalette.activeElement[0],
+        activeColour = juce::Colour((juce::uint8)currentPalette.activeElement[0],
             currentPalette.activeElement[1], currentPalette.activeElement[2], alpha);
         return activeColour;
     case 1:
-        juce::Colour inactiveColour((juce::uint8)currentPalette.inactiveElement[0],
+        inactiveColour = juce::Colour((juce::uint8)currentPalette.inactiveElement[0],
             currentPalette.inactiveElement[1], currentPalette.inactiveElement[2], alpha);
         return inactiveColour;
     case 2:
-        juce::Colour highlightColour((juce::uint8)currentPalette.highlightElement[0],
+        highlightColour = juce::Colour((juce::uint8)currentPalette.highlightElement[0],
             currentPalette.highlightElement[1], currentPalette.highlightElement[2], alpha);
         return highlightColour;
     case 3:
-        juce::Colour contrastColour((juce::uint8)currentPalette.contrastDark[0],
+        contrastColour = juce::Colour((juce::uint8)currentPalette.contrastDark[0],
             currentPalette.contrastDark[1], currentPalette.contrastDark[2], alpha);
         return activeColour;
     case 4:
-        juce::Colour gLightColour((juce::uint8)currentPalette.globalLight[0],
+        gLightColour = juce::Colour((juce::uint8)currentPalette.globalLight[0],
             currentPalette.globalLight[1], currentPalette.globalLight[2], alpha);
         return gLightColour;
     case 5:
-        juce::Colour gDarkColour((juce::uint8)currentPalette.globalDark[0],
+        gDarkColour = juce::Colour((juce::uint8)currentPalette.globalDark[0],
             currentPalette.globalDark[1], currentPalette.globalDark[2], alpha);
         return gDarkColour;
     default:
         jassertfalse;
     }
 
+}
+
+void VarikeyLookAndFeel::setFont(juce::Font& font)
+{
+    customFont = font;
+}
+
+juce::Font VarikeyLookAndFeel::getLabelFont(juce::Label& label)
+{
+    return customFont;
 }

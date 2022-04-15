@@ -1,33 +1,36 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent()
+MainComponent::MainComponent() : tuner(josefinSans)
 {
     varikeyLookAndFeel.setColourPalette(VarikeyLookAndFeel::palette::vaporwave);
     setLookAndFeel(&varikeyLookAndFeel);
     addAndMakeVisible(tuner);
+    josefinSans.setFontSizeAndStyle(60.f, "italic", 1.f, 0.f);
+    tuner.setCustomLookAndFeel(&varikeyLookAndFeel);
+    //tuner.setFont(josefinSans.getJosefinSans());
     setSize (600, 400);
 }
 
 MainComponent::~MainComponent()
 {
     setLookAndFeel(nullptr);
+    tuner.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(varikeyLookAndFeel.getColourFromPalette(VarikeyLookAndFeel::paletteColours::gDark));
-    josefinSans.setFontSizeAndStyle(60.f, "semi", 1.f, 0.f);
-    g.setFont (josefinSans.getJosefinSans());
-    g.setColour (juce::Colours::white);
+    //g.fillAll(varikeyLookAndFeel.getColourFromPalette(VarikeyLookAndFeel::paletteColours::contrast));
+    g.setFont (josefinSans.getCurrentFont());
+    g.setColour(juce::Colours::white);
     g.drawText ("Hello World!", getLocalBounds(), juce::Justification::centred, true);
 }
 
 void MainComponent::resized()
 {
-    getBounds().reduced(10, 10);
+    getBounds().reduce(10, 10);
     int height = getHeight();
     int width = getWidth();
 
@@ -38,5 +41,5 @@ void MainComponent::resized()
     int thirdRowStartX = 0;
     int thirdRowStartY = (height / 3) * 2;
 
-    tuner.setBounds(0, 0, getWidth(), getHeight());
+    tuner.setBounds(-5, (2 * (height / 3) - 5), getWidth(), getHeight() / 3);
 }

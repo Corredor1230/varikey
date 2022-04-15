@@ -50,11 +50,16 @@ public:
     VarikeyLookAndFeel();
     ~VarikeyLookAndFeel() override;
 
-    void setSliderPalette(ColourPalette palette, float alpha = 0.9f);
+    void setSliderPalette(ColourPalette palette, float alpha = 0.95f);
     void setColourPalette(palette paletteType);
     void setComponentPalette(ColourPalette palette, float alpha = 1.0f);
+    void setFont(juce::Font& font);
+
+    //Overriding look and feel to create new defaults
+    juce::Font getLabelFont(juce::Label& label) override;
     ColourPalette getColourPalette(palette paletteType);
     juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
+    
 
 private: 
 
@@ -82,6 +87,7 @@ private:
 
 
     //Fonts
+    juce::Font customFont;
     EmbeddedFonts josefinSans;
 };
 

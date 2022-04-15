@@ -11,6 +11,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Source/LookAndFeelElements/Fonts/EmbeddedFonts.h"
+#include "../VarikeyLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -25,14 +27,21 @@ public:
         horizontal
     };
 
-    TuningComponent();
+    TuningComponent(EmbeddedFonts font);
     ~TuningComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    void setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel);
+    void setFont(juce::Font& font);
+
+
+private:
 
     void setSliderParams(juce::Slider& slider, juce::Label& label, std::string name, int style);
-private:
+    //juce::Font tuningFont;
+
+    juce::Font customFont;
 
     juce::Slider slider0;
     juce::Slider slider1;
@@ -44,6 +53,8 @@ private:
     juce::Slider slider7;
     juce::Slider slider8;
     juce::Slider slider9;
+    juce::Slider slider10;
+    juce::Slider slider11;
 
     juce::Label label0;
     juce::Label label1;
@@ -55,6 +66,8 @@ private:
     juce::Label label7;
     juce::Label label8;
     juce::Label label9;
+    juce::Label label10;
+    juce::Label label11;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TuningComponent)
 };
