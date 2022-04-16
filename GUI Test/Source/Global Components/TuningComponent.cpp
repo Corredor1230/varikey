@@ -38,8 +38,10 @@ TuningComponent::TuningComponent()
     addAndMakeVisible(keyBreakValue);
     addAndMakeVisible(valueOutline);
     keyBreakValue.setEditable(true);
-    keyBreakValue.setColour(juce::Label::ColourIds::outlineColourId, 
-        slider0.findColour(juce::Slider::ColourIds::trackColourId));
+    //keyBreakValue.setColour(juce::Label::ColourIds::outlineColourId, 
+    //    slider0.findColour(juce::Slider::ColourIds::trackColourId));
+    keyBreakValue.setText("48", juce::dontSendNotification);
+    keyBreakValue.setJustificationType(juce::Justification::centredLeft);
 
     setSliderParams(slider0, label0, "0", vertical);
     setSliderParams(slider1, label1, "1", vertical);
@@ -66,7 +68,26 @@ void TuningComponent::paint (juce::Graphics& g)
     juce::Rectangle<float> border;
     border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
     g.setColour(slider0.findColour(juce::Slider::ColourIds::backgroundColourId));
-    g.drawRect(border, 1.0f);
+    g.drawRect(border, 2.0f);
+
+    juce::Colour toggleOff = getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickDisabledColourId);
+    juce::Colour toggleOn = getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickColourId);
+
+
+    switch (keyBreakToggle.getToggleState())
+    {
+    case 0:
+
+        keyBreakLabel.setColour(juce::Label::ColourIds::textColourId, toggleOff);
+        keyBreakValue.setColour(juce::Label::ColourIds::textColourId, toggleOff);
+        keyBreakToggle.setColour(juce::ToggleButton::ColourIds::tickDisabledColourId, toggleOff);
+        break;
+    case 1:
+        keyBreakLabel.setColour(juce::Label::ColourIds::textColourId, toggleOn);
+        keyBreakValue.setColour(juce::Label::ColourIds::textColourId, toggleOn);
+        keyBreakToggle.setColour(juce::ToggleButton::ColourIds::tickDisabledColourId, toggleOn);
+        break;
+    }
 }
 
 void TuningComponent::resized()
@@ -107,7 +128,7 @@ void TuningComponent::resized()
     transposeSlider.setBounds(transposeStartX, slider0.getBottom(), transposeWidth, transposeHeight);
     titleLabel.setBounds(labelStartX, topStartY, transposeTextBoxWidth, transposeTextBoxHeight);
     keyBreakToggle.setBounds(titleLabel.getRight() + sliderWidth, topStartY + 2, padding * 3, transposeTextBoxHeight);
-    keyBreakLabel.setBounds(keyBreakToggle.getRight(), topStartY, sliderWidth * 4, transposeTextBoxHeight);
+    keyBreakLabel.setBounds(keyBreakToggle.getRight(), topStartY, sliderWidth * 3.5, transposeTextBoxHeight);
     keyBreakLabel.setJustificationType(juce::Justification::centredLeft);
     keyBreakValue.setBounds(keyBreakLabel.getRight(), topStartY, sliderWidth, transposeTextBoxHeight);
     transposeLabel.setBounds(labelStartX, slider0.getBottom() - 2, transposeTextBoxWidth, transposeTextBoxHeight);

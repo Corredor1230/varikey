@@ -90,6 +90,7 @@ private:
     std::array<int, 3> lightGrey{ 139, 139, 139 };
     std::array<int, 3> darkGrey{ 42, 42, 42 };
     std::array<int, 3> almostWhite{ 243, 243, 243 };
+    std::array<int, 3> almostBlack{ 30, 30, 30 };
     //Black
 
 

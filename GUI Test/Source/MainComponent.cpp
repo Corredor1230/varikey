@@ -2,7 +2,7 @@
 
 //==============================================================================
 MainComponent::MainComponent() : 
-    varikeyLookAndFeel(VarikeyLookAndFeel::palette::clean)
+    varikeyLookAndFeel(VarikeyLookAndFeel::palette::vaporwave)
 {
     setLookAndFeel(&varikeyLookAndFeel);
     addAndMakeVisible(tuner);
@@ -44,5 +44,5 @@ void MainComponent::resized()
     int thirdRowStartX = 0;
     int thirdRowStartY = (height / 3) * 2;
 
-    tuner.setBounds(0, (2 * (height / 3)), getWidth(), getHeight() / 3);
+    tuner.setBounds(0, thirdRowStartY, getWidth(), getHeight() / 3);
 }
