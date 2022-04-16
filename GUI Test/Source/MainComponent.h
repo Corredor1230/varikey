@@ -1,12 +1,11 @@
 #pragma once
 
 #include <JuceHeader.h>
-#ifndef EMBEDDEDFONTS_H
 #include "LookAndFeelElements/Fonts/EmbeddedFonts.h"
-#endif
 #include "Global Components/TuningComponent.h"
 #include "VarikeyLookAndFeel.h"
 #include "Osc Components/AdditiveComponent.h"
+#include "Osc Components/GenComponent.h"
 
 //==============================================================================
 /*
@@ -23,6 +22,7 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    int getComboBoxIndex(juce::String& string);
 
 private:
     //==============================================================================
@@ -40,11 +40,18 @@ private:
 
     juce::ComboBox leftOscChoice;
     juce::ComboBox rightOscChoice;
+    int leftOscValue = 1;
+    int rightOscValue = 1;
 
     EmbeddedFonts josefinSans;
     TuningComponent tuner;
+
+    //First Row
     AdditiveComponent additiveLeft;
     AdditiveComponent additiveRight;
+    GenComponent genLeft;
+    GenComponent genRight;
+
 
     VarikeyLookAndFeel varikeyLookAndFeel;
 

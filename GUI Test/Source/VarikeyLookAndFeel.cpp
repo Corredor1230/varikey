@@ -23,6 +23,7 @@ VarikeyLookAndFeel::VarikeyLookAndFeel(palette paletteType)
     setComponentPalette(currentPalette);
     labelBorder.setBottom(0);
     labelBorder.setTop(0);
+
 }
 
 VarikeyLookAndFeel::~VarikeyLookAndFeel()
@@ -81,10 +82,8 @@ void VarikeyLookAndFeel::setSliderPalette(ColourPalette palette, float alpha)
     setColour(colourIds::textBoxHighlightColourId, juce::Colour((juce::uint8)palette.activeElement[0],
         palette.activeElement[1], palette.activeElement[2], alpha));
     setColour(colourIds::textBoxOutlineColourId, juce::Colour((juce::uint8)0, 0, 0, 0.f));
-    setColour(colourIds::textBoxTextColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
-        palette.highlightElement[1], palette.highlightElement[2], alpha));
-    setColour(juce::TextEditor::ColourIds::textColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
-        palette.highlightElement[1], palette.highlightElement[2], alpha));
+    setColour(colourIds::textBoxTextColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::TextEditor::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
 
 
 }
@@ -181,6 +180,14 @@ void VarikeyLookAndFeel::setFont(juce::Font& font)
 juce::Font VarikeyLookAndFeel::getLabelFont(juce::Label& label)
 {
     return customFont;
+}
+
+juce::Font VarikeyLookAndFeel::getComboBoxFont(juce::ComboBox& comboBox)
+{
+    EmbeddedFonts comboFonts;
+    comboFonts.setFontSizeAndStyle(10.0f, "italic", 1.0f, 0.0f);
+    juce::Font returnFont = comboFonts.getJosefinSans();
+    return returnFont;
 }
 
 juce::BorderSize<int> VarikeyLookAndFeel::getLabelBorderSize(juce::Label& label)

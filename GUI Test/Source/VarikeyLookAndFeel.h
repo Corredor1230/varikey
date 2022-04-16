@@ -60,6 +60,7 @@ public:
     //Overriding look and feel to create new defaults
     juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
     juce::Font getLabelFont(juce::Label&) override;
+    juce::Font getComboBoxFont(juce::ComboBox&) override;
     juce::BorderSize<int> getLabelBorderSize(juce::Label&) override;
     
     
