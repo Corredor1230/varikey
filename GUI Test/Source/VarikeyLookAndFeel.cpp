@@ -100,24 +100,28 @@ void VarikeyLookAndFeel::setColourPalette(palette paletteType)
 void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
 {
     //ToggleButton Colour
-    setColour(juce::ToggleButton::ColourIds::textColourId, juce::Colour((juce::uint8)palette.inactiveElement[0],
-        palette.inactiveElement[1], palette.inactiveElement[2], alpha));
-    setColour(juce::ToggleButton::ColourIds::tickColourId, juce::Colour((juce::uint8)palette.activeElement[0],
-        palette.activeElement[1], palette.activeElement[2], alpha));
-    setColour(juce::ToggleButton::ColourIds::tickDisabledColourId, juce::Colour((juce::uint8)palette.inactiveElement[0],
-        palette.inactiveElement[1], palette.inactiveElement[2], alpha));
+    setColour(juce::ToggleButton::ColourIds::textColourId,getColourFromPalette(inactive, alpha));
+    setColour(juce::ToggleButton::ColourIds::tickColourId, getColourFromPalette(active, alpha));
+    setColour(juce::ToggleButton::ColourIds::tickDisabledColourId, getColourFromPalette(contrast, alpha));
 
     //TabbedComponent Colour
-    setColour(juce::TabbedComponent::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.contrastDark[0],
-        palette.contrastDark[1], palette.contrastDark[2], alpha));
-    setColour(juce::TabbedComponent::ColourIds::outlineColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
-        palette.highlightElement[1], palette.highlightElement[2], alpha));
+    setColour(juce::TabbedComponent::ColourIds::backgroundColourId, getColourFromPalette(contrast, alpha));
+    setColour(juce::TabbedComponent::ColourIds::outlineColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::Label::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::ResizableWindow::ColourIds::backgroundColourId, getColourFromPalette(gDark, alpha));
 
-    setColour(juce::Label::ColourIds::textColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
-        palette.highlightElement[1], palette.highlightElement[2], alpha));
+    //ComboBox Colour
+    setColour(juce::ComboBox::ColourIds::backgroundColourId, getColourFromPalette(contrast, alpha));
+    setColour(juce::ComboBox::ColourIds::arrowColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::ComboBox::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::ComboBox::ColourIds::buttonColourId, getColourFromPalette(active, alpha));
+    setColour(juce::ComboBox::ColourIds::outlineColourId, getColourFromPalette(inactive, 0));
 
-    setColour(juce::ResizableWindow::ColourIds::backgroundColourId, juce::Colour((juce::uint8)palette.globalDark[0],
-        palette.globalDark[1], palette.globalDark[2], alpha));
+    //Menu
+    setColour(juce::PopupMenu::ColourIds::backgroundColourId, getColourFromPalette(contrast, alpha));
+    setColour(juce::PopupMenu::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
+    setColour(juce::PopupMenu::ColourIds::highlightedBackgroundColourId, getColourFromPalette(inactive, alpha));
+    setColour(juce::PopupMenu::ColourIds::highlightedTextColourId, getColourFromPalette(highlight, alpha));
 }
 
 /*
@@ -153,7 +157,7 @@ juce::Colour VarikeyLookAndFeel::getColourFromPalette(paletteColours colour, flo
     case 3:
         contrastColour = juce::Colour((juce::uint8)currentPalette.contrastDark[0],
             currentPalette.contrastDark[1], currentPalette.contrastDark[2], alpha);
-        return activeColour;
+        return contrastColour;
     case 4:
         gLightColour = juce::Colour((juce::uint8)currentPalette.globalLight[0],
             currentPalette.globalLight[1], currentPalette.globalLight[2], alpha);

@@ -19,10 +19,17 @@
               file="Source/Osc Components/AdditiveComponent.cpp"/>
         <FILE id="rEuOsg" name="AdditiveComponent.h" compile="0" resource="0"
               file="Source/Osc Components/AdditiveComponent.h"/>
+        <FILE id="htbclv" name="GenComponent.cpp" compile="1" resource="0"
+              file="Source/Osc Components/GenComponent.cpp"/>
+        <FILE id="qgtBZW" name="GenComponent.h" compile="0" resource="0" file="Source/Osc Components/GenComponent.h"/>
         <FILE id="XXXHBL" name="KarplusComponent.cpp" compile="1" resource="0"
               file="Source/Osc Components/KarplusComponent.cpp"/>
         <FILE id="JBT6W8" name="KarplusComponent.h" compile="0" resource="0"
               file="Source/Osc Components/KarplusComponent.h"/>
+        <FILE id="ACDfez" name="NoiseComponent.cpp" compile="1" resource="0"
+              file="Source/Osc Components/NoiseComponent.cpp"/>
+        <FILE id="SXy7hf" name="NoiseComponent.h" compile="0" resource="0"
+              file="Source/Osc Components/NoiseComponent.h"/>
       </GROUP>
       <GROUP id="{B29E0835-26D6-07EC-9D73-25C124CD54F7}" name="LookAndFeelElements">
         <GROUP id="{5DA5F121-ED08-74E3-0E27-A0C1A0FA5F91}" name="Fonts">

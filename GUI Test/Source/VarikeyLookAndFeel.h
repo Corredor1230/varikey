@@ -56,6 +56,7 @@ public:
     void setFont(juce::Font& font);
     void setDistanceToSlider(float distance, juce::String& type);
 
+
     //Overriding look and feel to create new defaults
     juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
     juce::Font getLabelFont(juce::Label&) override;
@@ -81,14 +82,14 @@ private:
     std::array<int, 3> purp{ 105, 98, 212 };
     std::array<int, 3> pink{ 253, 169, 247 };
     std::array<int, 3> pale{ 234, 246, 242 };
-    std::array<int, 3> dark{ 45, 35, 82 };
-    std::array<int, 3> black{ 0, 0, 0 };
+    std::array<int, 3> dark{ 65, 55, 102 };
+    std::array<int, 3> black{ 10, 0, 20 };
 
     //Clean Palette
     std::array<int, 3> orange{ 255, 65, 102 };
     std::array<int, 3> midGrey{ 88, 88, 88 };
     std::array<int, 3> lightGrey{ 139, 139, 139 };
-    std::array<int, 3> darkGrey{ 42, 42, 42 };
+    std::array<int, 3> darkGrey{ 62, 62, 62 };
     std::array<int, 3> almostWhite{ 243, 243, 243 };
     std::array<int, 3> almostBlack{ 30, 30, 30 };
     //Black

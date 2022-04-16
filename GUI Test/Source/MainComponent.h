@@ -6,6 +6,7 @@
 #endif
 #include "Global Components/TuningComponent.h"
 #include "VarikeyLookAndFeel.h"
+#include "Osc Components/AdditiveComponent.h"
 
 //==============================================================================
 /*
@@ -37,8 +38,13 @@ private:
     std::array<int, 3> pink{ 253, 169, 247 };
     std::array<int, 3> pale{ 234, 246, 242 };
 
+    juce::ComboBox leftOscChoice;
+    juce::ComboBox rightOscChoice;
+
     EmbeddedFonts josefinSans;
     TuningComponent tuner;
+    AdditiveComponent additiveLeft;
+    AdditiveComponent additiveRight;
 
     VarikeyLookAndFeel varikeyLookAndFeel;
 

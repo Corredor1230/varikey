@@ -65,14 +65,15 @@ TuningComponent::~TuningComponent()
 void TuningComponent::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colour());
-    juce::Rectangle<float> border;
-    border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
-    g.setColour(slider0.findColour(juce::Slider::ColourIds::backgroundColourId));
-    g.drawRect(border, 2.0f);
+    //juce::Rectangle<float> border;
+    //border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
+    g.setColour(slider0.findColour(juce::ToggleButton::ColourIds::tickDisabledColourId));
+    juce::Line<float> line(juce::Point<float>(5, 0), juce::Point<float>(getRight() - 5, 0));
+    g.drawLine(line);
+    //g.drawRect(border, 1.0f);
 
     juce::Colour toggleOff = getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickDisabledColourId);
     juce::Colour toggleOn = getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickColourId);
-
 
     switch (keyBreakToggle.getToggleState())
     {
