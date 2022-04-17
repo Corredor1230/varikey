@@ -84,7 +84,7 @@ private:
     std::array<int, 3> pink{ 253, 169, 247 };
     std::array<int, 3> pale{ 234, 246, 242 };
     std::array<int, 3> dark{ 65, 55, 102 };
-    std::array<int, 3> black{ 10, 0, 20 };
+    std::array<int, 3> black{ 7, 0, 7 };
 
     //Clean Palette
     std::array<int, 3> orange{ 255, 65, 102 };
@@ -99,6 +99,8 @@ private:
     //Fonts
     juce::Font customFont;
     EmbeddedFonts josefinSans;
+    EmbeddedFonts comboFonts;
+
 
     //Shapes
     juce::BorderSize<int> labelBorder;

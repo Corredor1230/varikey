@@ -6,6 +6,7 @@
 #include "VarikeyLookAndFeel.h"
 #include "Osc Components/AdditiveComponent.h"
 #include "Osc Components/GenComponent.h"
+#include "Osc Components/KarplusComponent.h"
 
 //==============================================================================
 /*
@@ -51,6 +52,8 @@ private:
     AdditiveComponent additiveRight;
     GenComponent genLeft;
     GenComponent genRight;
+    KarplusComponent karpLeft;
+    KarplusComponent karpRight;
 
 
     VarikeyLookAndFeel varikeyLookAndFeel;

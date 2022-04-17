@@ -20,9 +20,9 @@ GenComponent::GenComponent()
 
     addAndMakeVisible(titleLabel);
     addAndMakeVisible(whiteLabel);
+    addAndMakeVisible(pinkLabel);
     whiteLabel.setText("White", juce::NotificationType::sendNotification);
     whiteLabel.setJustificationType(juce::Justification::centred);
-    addAndMakeVisible(pinkLabel);
     pinkLabel.setText("Pink", juce::NotificationType::sendNotification);
     pinkLabel.setJustificationType(juce::Justification::centred);
 
@@ -42,6 +42,7 @@ void GenComponent::paint (juce::Graphics& g)
     border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
     g.setColour(noiseLevel.findColour(juce::ToggleButton::ColourIds::tickDisabledColourId));
     g.drawRect(border, 1.0f);
+
     noiseShapeValue = noiseShape.getValue();
 
 

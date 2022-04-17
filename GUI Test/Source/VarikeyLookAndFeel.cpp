@@ -17,6 +17,8 @@ VarikeyLookAndFeel::VarikeyLookAndFeel(palette paletteType)
     //These parameters define the font for most components
     //Modify them wisely!
     josefinSans.setFontSizeAndStyle(22.0f, "medium", 1.0f, 0.0f);
+    comboFonts.setFontSizeAndStyle(10.0f, "italic", 1.0f, 0.0f);
+
     customFont = josefinSans.getCurrentFont();
     setDefaultSansSerifTypeface(josefinSans.getCurrentTypeface());
     setSliderPalette(currentPalette);
@@ -184,9 +186,7 @@ juce::Font VarikeyLookAndFeel::getLabelFont(juce::Label& label)
 
 juce::Font VarikeyLookAndFeel::getComboBoxFont(juce::ComboBox& comboBox)
 {
-    EmbeddedFonts comboFonts;
-    comboFonts.setFontSizeAndStyle(10.0f, "italic", 1.0f, 0.0f);
-    juce::Font returnFont = comboFonts.getJosefinSans();
+    juce::Font returnFont = comboFonts.getCurrentFont();
     return returnFont;
 }
 
