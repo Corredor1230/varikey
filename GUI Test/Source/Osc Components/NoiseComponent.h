@@ -24,6 +24,19 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel);
+    void setRegionTitle(juce::String& region);
+
 private:
+
+    juce::Label titleLabel;
+    juce::String regionTitle = "Osc 1: ";
+    juce::String componentTitle = "Noise Synth";
+
+    juce::Slider toneSlider;
+
+    juce::Label toneLabel;
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoiseComponent)
 };

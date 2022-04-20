@@ -14,9 +14,15 @@
 //==============================================================================
 NoiseComponent::NoiseComponent()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
-
+    addAndMakeVisible(titleLabel);
+    addAndMakeVisible(toneSlider);
+    addAndMakeVisible(toneLabel);
+    toneSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    toneSlider.setRange(0.00, 1.00, 0.01);
+    toneLabel.setText("Tone", juce::dontSendNotification);
+    toneLabel.setJustificationType(juce::Justification::centred);
+    toneLabel.attachToComponent(&toneSlider, false);
+    toneSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
 }
 
 NoiseComponent::~NoiseComponent()
@@ -25,27 +31,46 @@ NoiseComponent::~NoiseComponent()
 
 void NoiseComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    g.fillAll(juce::Colour());
+    juce::Rectangle<float> border;
+    border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
+    g.setColour(getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickDisabledColourId));
+    g.drawRect(border, 1.0f);
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    auto bounds = getBounds().reduced(5, 5);
+    int height = bounds.getHeight();
+    int width = bounds.getWidth();
+    int padding = 10;
+    int sliderLabel = height / 6;
+    int sliderLabelWidth = 50;
+    int title = height / 6;
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+    int sliderWidth = width;
+    int sliderHeight = height - title - sliderLabel - padding;
+    int sliderDiameter = std::min(sliderWidth, sliderHeight);
+    int sliderStartX = border.getCentreX() - (sliderDiameter / 2);
+    int sliderStartY = title + sliderLabel + padding;
 
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
+    titleLabel.setText(regionTitle + componentTitle, juce::dontSendNotification);
+    titleLabel.setBounds(padding * 1.5, padding / 1.5, width, title);
 
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("NoiseComponent", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    toneSlider.setBounds(sliderStartX, sliderStartY, sliderDiameter, sliderDiameter);
+
+
+
 }
 
 void NoiseComponent::resized()
 {
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
 
+}
+
+void NoiseComponent::setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel)
+{
+    setLookAndFeel(customLookAndFeel);
+}
+
+void NoiseComponent::setRegionTitle(juce::String& region)
+{
+    regionTitle = region;
 }

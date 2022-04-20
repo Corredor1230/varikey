@@ -7,6 +7,7 @@
 #include "Osc Components/AdditiveComponent.h"
 #include "Osc Components/GenComponent.h"
 #include "Osc Components/KarplusComponent.h"
+#include "Osc Components/NoiseComponent.h"
 
 //==============================================================================
 /*
@@ -54,6 +55,8 @@ private:
     GenComponent genRight;
     KarplusComponent karpLeft;
     KarplusComponent karpRight;
+    NoiseComponent noiseLeft;
+    NoiseComponent noiseRight;
 
 
     VarikeyLookAndFeel varikeyLookAndFeel;

@@ -13,6 +13,8 @@ MainComponent::MainComponent() :
     addAndMakeVisible(genRight);
     addAndMakeVisible(karpLeft);
     addAndMakeVisible(karpRight);
+    addAndMakeVisible(noiseLeft);
+    addAndMakeVisible(noiseRight);
 
     addAndMakeVisible(leftOscChoice);
     addAndMakeVisible(rightOscChoice);
@@ -24,6 +26,7 @@ MainComponent::MainComponent() :
     additiveRight.setRegionTitle(rightRegionTitle);
     genRight.setRegionTitle(rightRegionTitle);
     karpRight.setRegionTitle(rightRegionTitle);
+    noiseRight.setRegionTitle(rightRegionTitle);
 
     std::initializer_list<const char*> synthList{ "Generator", "Additive", "Karplus", "Noise" };
     leftOscChoice.addItemList(juce::StringArray(synthList), 1);
@@ -38,6 +41,8 @@ MainComponent::MainComponent() :
     genRight.setCustomLookAndFeel(&varikeyLookAndFeel);
     karpLeft.setCustomLookAndFeel(&varikeyLookAndFeel);
     karpRight.setCustomLookAndFeel(&varikeyLookAndFeel);
+    noiseLeft.setCustomLookAndFeel(&varikeyLookAndFeel);
+    noiseRight.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (600, 700);
 }
@@ -52,6 +57,8 @@ MainComponent::~MainComponent()
     genRight.setCustomLookAndFeel(nullptr);
     karpLeft.setCustomLookAndFeel(nullptr);
     karpRight.setCustomLookAndFeel(nullptr);
+    noiseLeft.setCustomLookAndFeel(nullptr);
+    noiseRight.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -91,21 +98,31 @@ void MainComponent::paint (juce::Graphics& g)
         genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
         additiveLeft.setBounds(0, 0, 0, 0);
         karpLeft.setBounds(0, 0, 0, 0);
+        noiseLeft.setBounds(0, 0, 0, 0);
         break;
     case 1:
         genLeft.setBounds(0, 0, 0, 0);
         additiveLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
         karpLeft.setBounds(0, 0, 0, 0);
+        noiseLeft.setBounds(0, 0, 0, 0);
         break;
     case 2:
         genLeft.setBounds(0, 0, 0, 0);
         additiveLeft.setBounds(0, 0, 0, 0);
         karpLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+        noiseLeft.setBounds(0, 0, 0, 0);
+        break;
+    case 3:
+        genLeft.setBounds(0, 0, 0, 0);
+        additiveLeft.setBounds(0, 0, 0, 0);
+        karpLeft.setBounds(0, 0, 0, 0);
+        noiseLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
         break;
     default:
         genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
         additiveLeft.setBounds(0, 0, 0, 0);
         karpLeft.setBounds(0, 0, 0, 0);
+        noiseLeft.setBounds(0, 0, 0, 0);
         break;
     }
 
@@ -115,21 +132,31 @@ void MainComponent::paint (juce::Graphics& g)
         genRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
         additiveRight.setBounds(0, 0, 0, 0);
         karpRight.setBounds(0, 0, 0, 0);
+        noiseRight.setBounds(0, 0, 0, 0);
         break;
     case 1:
         genRight.setBounds(0, 0, 0, 0);
         additiveRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
         karpRight.setBounds(0, 0, 0, 0);
+        noiseRight.setBounds(0, 0, 0, 0);
         break;
     case 2:
         genRight.setBounds(0, 0, 0, 0);
         additiveRight.setBounds(0, 0, 0, 0);
         karpRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+        noiseRight.setBounds(0, 0, 0, 0);
+        break;
+    case 3:
+        genRight.setBounds(0, 0, 0, 0);
+        additiveRight.setBounds(0, 0, 0, 0);
+        karpRight.setBounds(0, 0, 0, 0);
+        noiseRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
         break;
     default:
         genRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
         additiveRight.setBounds(0, 0, 0, 0);
         karpRight.setBounds(0, 0, 0, 0);
+        noiseRight.setBounds(0, 0, 0, 0);
         break;
     }
 
