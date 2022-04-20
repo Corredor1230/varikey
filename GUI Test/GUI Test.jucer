@@ -56,6 +56,8 @@
               file="Source/Process Components/FilterComponent.cpp"/>
         <FILE id="dhXXcP" name="FilterComponent.h" compile="0" resource="0"
               file="Source/Process Components/FilterComponent.h"/>
+        <FILE id="t3G9Yc" name="FmComponent.cpp" compile="1" resource="0" file="Source/Process Components/FmComponent.cpp"/>
+        <FILE id="OKPdZg" name="FmComponent.h" compile="0" resource="0" file="Source/Process Components/FmComponent.h"/>
         <FILE id="oGeI3B" name="LfoComponent.cpp" compile="1" resource="0"
               file="Source/Process Components/LfoComponent.cpp"/>
         <FILE id="yxyBtO" name="LfoComponent.h" compile="0" resource="0" file="Source/Process Components/LfoComponent.h"/>

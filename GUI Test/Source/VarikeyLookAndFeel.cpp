@@ -117,6 +117,7 @@ void VarikeyLookAndFeel::setComponentPalette(ColourPalette palette, float alpha)
     setColour(juce::ComboBox::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
     setColour(juce::ComboBox::ColourIds::buttonColourId, getColourFromPalette(active, alpha));
     setColour(juce::ComboBox::ColourIds::outlineColourId, getColourFromPalette(inactive, 0));
+    setColour(juce::TextEditor::ColourIds::textColourId, getColourFromPalette(highlight, alpha));
 
     //Menu
     setColour(juce::PopupMenu::ColourIds::backgroundColourId, getColourFromPalette(contrast, alpha));

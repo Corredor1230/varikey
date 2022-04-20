@@ -8,6 +8,7 @@
 #include "Osc Components/GenComponent.h"
 #include "Osc Components/KarplusComponent.h"
 #include "Osc Components/NoiseComponent.h"
+#include "Process Components/FmComponent.h"
 
 //==============================================================================
 /*
@@ -42,6 +43,8 @@ private:
 
     juce::ComboBox leftOscChoice;
     juce::ComboBox rightOscChoice;
+
+
     int leftOscValue = 1;
     int rightOscValue = 1;
 
@@ -57,6 +60,12 @@ private:
     KarplusComponent karpRight;
     NoiseComponent noiseLeft;
     NoiseComponent noiseRight;
+
+    //FM Row
+    FmComponent fmLeft;
+    FmComponent fmRight;
+    juce::Slider crossSlider;
+    juce::Label crossLabel;
 
 
     VarikeyLookAndFeel varikeyLookAndFeel;
