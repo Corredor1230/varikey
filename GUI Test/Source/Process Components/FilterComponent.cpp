@@ -14,9 +14,19 @@
 //==============================================================================
 FilterComponent::FilterComponent()
 {
-    // In your constructor, you should add any child components, and
-    // initialise any special settings that your component needs.
+    addAndMakeVisible(titleLabel);
+    titleLabel.setText("Filter", juce::dontSendNotification);
 
+    setSliderParams(lopCutoffSlider, lopCutoffLabel, "LOP Cutoff", rotary);
+    lopCutoffSlider.setRange(20.0, 20000.0f, 1.0f);
+    lopCutoffSlider.setSkewFactorFromMidPoint(1000.0f);
+    setSliderParams(hipCutoffSlider, hipCutoffLabel, "HIP Cutoff", rotary);
+    hipCutoffSlider.setRange(20.0f, 20000.0f, 1.0f);
+    hipCutoffSlider.setSkewFactorFromMidPoint(1000.0f);
+    setSliderParams(lopQSlider, lopQLabel, "Q", rotary);
+    lopQSlider.setRange(1.0f, 10.0f, 0.1f);
+    setSliderParams(hipQSlider, hipQLabel, "Q", rotary);
+    hipQSlider.setRange(1.0f, 10.0f, 0.1f);
 }
 
 FilterComponent::~FilterComponent()
@@ -25,22 +35,25 @@ FilterComponent::~FilterComponent()
 
 void FilterComponent::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    g.fillAll(juce::Colour());
+    juce::Rectangle<float> border;
+    border.setBounds(5, 5, getWidth() - 10, getHeight() - 10);
+    g.setColour(getLookAndFeel().findColour(juce::ToggleButton::ColourIds::tickDisabledColourId));
+    g.drawRect(border, 1.0f);
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    auto bounds = getBounds().reduced(5, 5);
+    int height = bounds.getHeight();
+    int width = bounds.getWidth();
+    int padding = 10;
+    int titleHeight = 18;
+    int title = height / 6;
+    int sliderLabelWidth = width / 5;
+    int sliderLabelHeight = height / 4;
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour (juce::Colours::grey);
-    g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
-
-    g.setColour (juce::Colours::white);
-    g.setFont (14.0f);
-    g.drawText ("FilterComponent", getLocalBounds(),
-                juce::Justification::centred, true);   // draw some placeholder text
+    int sliderWidth = width / 2;
+    int sliderHeight = height / 2;
+    int sliderDiameter = std::min(sliderWidth, sliderHeight);
+    
 }
 
 void FilterComponent::resized()
@@ -48,4 +61,36 @@ void FilterComponent::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
+}
+
+void FilterComponent::setSliderParams(juce::Slider& slider, juce::Label& label, juce::String name, int style)
+{
+    addAndMakeVisible(slider);
+    addAndMakeVisible(label);
+    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    label.setText(name, juce::dontSendNotification);
+
+    switch (style)
+    {
+    case vertical:
+        label.attachToComponent(&slider, false);
+        slider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+        break;
+    case rotary:
+        slider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+        label.setJustificationType(juce::Justification::centredRight);
+        break;
+    case horizontal:
+        slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 25);
+        slider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
+        break;
+    default:
+        slider.setSliderStyle(juce::Slider::SliderStyle::LinearBarVertical);
+        break;
+    }
+}
+
+void FilterComponent::setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel)
+{
+    setLookAndFeel(customLookAndFeel);
 }
