@@ -10,6 +10,8 @@
 #include "Osc Components/NoiseComponent.h"
 #include "Process Components/FmComponent.h"
 #include "Process Components/FilterComponent.h"
+#include "Process Components/AdsrComponent.h"
+#include "Process Components/ModAdsrComponent.h"
 
 //==============================================================================
 /*
@@ -70,6 +72,8 @@ private:
 
     //Second Row
     FilterComponent filters;
+    AdsrComponent ampAdsr;
+    ModAdsrComponent modAdsr;
 
 
 

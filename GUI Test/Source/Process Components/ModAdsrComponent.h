@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    AdsrComponent.h
-    Created: 8 Apr 2022 11:36:36am
+    ModAdsrComponent.h
+    Created: 21 Apr 2022 4:08:07am
     Author:  juanp
 
   ==============================================================================
@@ -15,7 +15,7 @@
 //==============================================================================
 /*
 */
-class AdsrComponent  : public juce::Component
+class ModAdsrComponent  : public juce::Component
 {
 public:
 
@@ -25,10 +25,10 @@ public:
         horizontal
     };
 
-    AdsrComponent();
-    ~AdsrComponent() override;
+    ModAdsrComponent();
+    ~ModAdsrComponent() override;
 
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
     void setSliderParams(juce::Slider& slider, juce::Label& label, std::string name, int style);
@@ -41,6 +41,9 @@ private:
 
     juce::Label titleLabel;
 
+    juce::ComboBox routeBox;
+    juce::Label routeLabel;
+
     juce::Slider attackSlider;
     juce::Slider decaySlider;
     juce::Slider sustainSlider;
@@ -51,5 +54,5 @@ private:
     juce::Label sustainLabel;
     juce::Label releaseLabel;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdsrComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModAdsrComponent)
 };

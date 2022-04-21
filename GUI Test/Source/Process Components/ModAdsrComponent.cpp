@@ -1,26 +1,31 @@
 /*
   ==============================================================================
 
-    AdsrComponent.cpp
-    Created: 8 Apr 2022 11:36:36am
+    ModAdsrComponent.cpp
+    Created: 21 Apr 2022 4:08:07am
     Author:  juanp
 
   ==============================================================================
 */
 
 #include <JuceHeader.h>
-#include "AdsrComponent.h"
+#include "ModAdsrComponent.h"
 
 //==============================================================================
-AdsrComponent::AdsrComponent()
+ModAdsrComponent::ModAdsrComponent()
 {
     setSliderParams(attackSlider, attackLabel, "A", vertical);
     setSliderParams(decaySlider, decayLabel, "D", vertical);
     setSliderParams(sustainSlider, sustainLabel, "S", vertical);
     setSliderParams(releaseSlider, releaseLabel, "R", vertical);
     addAndMakeVisible(titleLabel);
+    addAndMakeVisible(routeBox);
+    addAndMakeVisible(routeLabel);
+    routeBox.setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour());
 
-    titleLabel.setText("Amp ADSR", juce::dontSendNotification);
+
+    titleLabel.setText("Mod ADSR", juce::dontSendNotification);
+    routeLabel.setText("Route", juce::dontSendNotification);
     attackSlider.setRange(0.0, maximumSliderValue, sliderInterval);
     attackSlider.setSkewFactorFromMidPoint(sliderSkewFromMid);
     decaySlider.setRange(0.0, maximumSliderValue, sliderInterval);
@@ -29,14 +34,28 @@ AdsrComponent::AdsrComponent()
     releaseSlider.setRange(0.0, maximumSliderValue, sliderInterval);
     releaseSlider.setSkewFactorFromMidPoint(sliderSkewFromMid);
 
+    std::initializer_list<const char*> synthList
+    { 
+        "none",
+        "gen1Noise", "gen2Noise",
+        "noise1Tone", "noise2Tone",
+        "mix", 
+        "fm1Ratio", "fm1Depth",
+        "fm2Ratio", "fm2Depth",
+        "lopCutoff", "lopQ",
+        "hipCutoff", "hipQ",
+        "detune", "volume"
+    };
+    routeBox.addItemList(juce::StringArray(synthList), 1);
+
 
 }
 
-AdsrComponent::~AdsrComponent()
+ModAdsrComponent::~ModAdsrComponent()
 {
 }
 
-void AdsrComponent::paint (juce::Graphics& g)
+void ModAdsrComponent::paint(juce::Graphics& g)
 {
     g.fillAll(juce::Colour());
     juce::Rectangle<float> border;
@@ -48,7 +67,7 @@ void AdsrComponent::paint (juce::Graphics& g)
     int height = bounds.getHeight();
     int width = bounds.getWidth();
     int padding = 10;
-    int titleHeight = height / 6;
+    int titleHeight = height / 5.5;
     int sliderLabelHeight = height / 6;
     int sliderLabelWidth = 50;
 
@@ -57,7 +76,9 @@ void AdsrComponent::paint (juce::Graphics& g)
 
     int sliderStartX = padding;
 
-    titleLabel.setBounds(padding * 1.5, padding / 1.5, width, titleHeight);
+    titleLabel.setBounds(padding * 1.5, padding / 1.5, width / 2, titleHeight);
+    routeLabel.setBounds(titleLabel.getRight(), padding / 1.5, width / 4, titleHeight);
+    routeBox.setBounds(routeLabel.getRight() - padding / 2, padding, width / 6, titleHeight - padding / 2);
 
     int labelStartY = titleLabel.getBottom();
     attackLabel.setBounds(sliderStartX, labelStartY, sliderWidth, titleHeight);
@@ -74,14 +95,14 @@ void AdsrComponent::paint (juce::Graphics& g)
 
 }
 
-void AdsrComponent::resized()
+void ModAdsrComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
 }
 
-void AdsrComponent::setSliderParams(juce::Slider& slider, juce::Label& label, std::string name, int style)
+void ModAdsrComponent::setSliderParams(juce::Slider& slider, juce::Label& label, std::string name, int style)
 {
     addAndMakeVisible(slider);
     addAndMakeVisible(label);
@@ -108,7 +129,7 @@ void AdsrComponent::setSliderParams(juce::Slider& slider, juce::Label& label, st
     }
 }
 
-void AdsrComponent::setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel)
+void ModAdsrComponent::setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel)
 {
     setLookAndFeel(customLookAndFeel);
 }

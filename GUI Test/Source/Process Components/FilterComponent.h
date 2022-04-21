@@ -45,6 +45,8 @@ private:
     juce::ToggleButton lopToggle;
     juce::ToggleButton hipToggle;
 
+    juce::Label lopLabel;
+    juce::Label hipLabel;
     juce::Label lopCutoffLabel;
     juce::Label hipCutoffLabel;
     juce::Label lopQLabel;

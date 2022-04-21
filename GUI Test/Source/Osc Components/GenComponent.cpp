@@ -26,7 +26,7 @@ GenComponent::GenComponent()
     pinkLabel.setText("Pink", juce::NotificationType::sendNotification);
     pinkLabel.setJustificationType(juce::Justification::centred);
 
-    waveShape.setRange(0, 4, 1);
+    waveShape.setRange(0, 3, 1);
     noiseLevel.setRange(0.00, 1.00, 0.01);
     noiseShape.setRange(0, 1, 1);
 }

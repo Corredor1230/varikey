@@ -25,6 +25,8 @@ MainComponent::MainComponent() :
     addAndMakeVisible(crossLabel);
 
     addAndMakeVisible(filters);
+    addAndMakeVisible(ampAdsr);
+    addAndMakeVisible(modAdsr);
 
     crossSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     crossSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 25);
@@ -61,6 +63,8 @@ MainComponent::MainComponent() :
     fmLeft.setCustomLookAndFeel(&varikeyLookAndFeel);
     fmRight.setCustomLookAndFeel(&varikeyLookAndFeel);
     filters.setCustomLookAndFeel(&varikeyLookAndFeel);
+    ampAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
+    modAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (600, 700);
 }
@@ -80,6 +84,8 @@ MainComponent::~MainComponent()
     fmLeft.setCustomLookAndFeel(nullptr);
     fmRight.setCustomLookAndFeel(nullptr);
     filters.setCustomLookAndFeel(nullptr);
+    ampAdsr.setCustomLookAndFeel(nullptr);
+    modAdsr.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -199,6 +205,8 @@ void MainComponent::paint (juce::Graphics& g)
     crossLabel.setBounds(labelStartX, firstRowHeight, labelWidth, labelHeight);
 
     filters.setBounds(firstRowStartX, secondRowStartY, firstColumnWidth, secondRowHeight);
+    ampAdsr.setBounds(firstColumnWidth, secondRowStartY, firstColumnWidth, secondRowHeight / 2);
+    modAdsr.setBounds(firstColumnWidth, ampAdsr.getBottom(), firstColumnWidth, secondRowHeight / 2);
 
 }
 

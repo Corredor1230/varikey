@@ -61,6 +61,10 @@
         <FILE id="oGeI3B" name="LfoComponent.cpp" compile="1" resource="0"
               file="Source/Process Components/LfoComponent.cpp"/>
         <FILE id="yxyBtO" name="LfoComponent.h" compile="0" resource="0" file="Source/Process Components/LfoComponent.h"/>
+        <FILE id="wPz7zD" name="ModAdsrComponent.cpp" compile="1" resource="0"
+              file="Source/Process Components/ModAdsrComponent.cpp"/>
+        <FILE id="mcIh2i" name="ModAdsrComponent.h" compile="0" resource="0"
+              file="Source/Process Components/ModAdsrComponent.h"/>
       </GROUP>
       <FILE id="jfVF7G" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="GcEfj8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
