@@ -24,6 +24,8 @@ MainComponent::MainComponent() :
     addAndMakeVisible(crossSlider);
     addAndMakeVisible(crossLabel);
 
+    addAndMakeVisible(filters);
+
     crossSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     crossSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 25);
     crossSlider.setRange(-1.0, 1.0, 0.01);
@@ -58,6 +60,7 @@ MainComponent::MainComponent() :
     noiseRight.setCustomLookAndFeel(&varikeyLookAndFeel);
     fmLeft.setCustomLookAndFeel(&varikeyLookAndFeel);
     fmRight.setCustomLookAndFeel(&varikeyLookAndFeel);
+    filters.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (600, 700);
 }
@@ -76,6 +79,7 @@ MainComponent::~MainComponent()
     noiseRight.setCustomLookAndFeel(nullptr);
     fmLeft.setCustomLookAndFeel(nullptr);
     fmRight.setCustomLookAndFeel(nullptr);
+    filters.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -192,10 +196,8 @@ void MainComponent::paint (juce::Graphics& g)
     fmRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowHeight - padding, firstColumnWidth, fmRowHeight + padding);
     crossSlider.setBounds(firstColumnWidth, crossLabel.getBottom(), secondColumnWidth, crossHeight);
     crossLabel.setBounds(labelStartX, firstRowHeight, labelWidth, labelHeight);
-    //additiveLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-    //additiveRight.setBounds(additiveLeft.getRight() + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
-    //genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-    //genRight.setBounds(genLeft.getRight() + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+
+
 
 }
 
