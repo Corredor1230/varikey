@@ -9,6 +9,7 @@
 #include "Osc Components/KarplusComponent.h"
 #include "Osc Components/NoiseComponent.h"
 #include "Process Components/FmComponent.h"
+#include "Process Components/FilterComponent.h"
 
 //==============================================================================
 /*
@@ -66,6 +67,10 @@ private:
     FmComponent fmRight;
     juce::Slider crossSlider;
     juce::Label crossLabel;
+
+    //Second Row
+    FilterComponent filters;
+
 
 
     VarikeyLookAndFeel varikeyLookAndFeel;

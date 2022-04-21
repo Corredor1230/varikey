@@ -42,11 +42,15 @@ private:
     juce::Slider hipCutoffSlider;
     juce::Slider lopQSlider;
     juce::Slider hipQSlider;
+    juce::ToggleButton lopToggle;
+    juce::ToggleButton hipToggle;
 
     juce::Label lopCutoffLabel;
     juce::Label hipCutoffLabel;
     juce::Label lopQLabel;
     juce::Label hipQLabel;
+    juce::Label lopToggleLabel;
+    juce::Label hipToggleLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterComponent)
 };

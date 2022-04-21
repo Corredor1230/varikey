@@ -98,6 +98,7 @@ void MainComponent::paint (juce::Graphics& g)
     int firstRowStartX = 0;
     int firstRowStartY = 0;
     int firstRowHeight = 2 * (height / 9);
+    int secondRowHeight = height / 3;
     int firstColumnWidth = width / 3;
     int secondColumnWidth = width / 3;
 
@@ -192,12 +193,12 @@ void MainComponent::paint (juce::Graphics& g)
         break;
     }
 
-    fmLeft.setBounds(firstRowStartX, firstRowHeight - padding, firstColumnWidth, fmRowHeight + padding);
-    fmRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowHeight - padding, firstColumnWidth, fmRowHeight + padding);
+    fmLeft.setBounds(firstRowStartX, firstRowHeight - padding / 2, firstColumnWidth, fmRowHeight + padding);
+    fmRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowHeight - padding / 2, firstColumnWidth, fmRowHeight + padding);
     crossSlider.setBounds(firstColumnWidth, crossLabel.getBottom(), secondColumnWidth, crossHeight);
     crossLabel.setBounds(labelStartX, firstRowHeight, labelWidth, labelHeight);
 
-
+    filters.setBounds(firstRowStartX, secondRowStartY, firstColumnWidth, secondRowHeight);
 
 }
 

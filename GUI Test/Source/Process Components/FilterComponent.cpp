@@ -22,6 +22,14 @@ FilterComponent::FilterComponent()
     lopCutoffSlider.setSkewFactorFromMidPoint(1000.0f);
     setSliderParams(hipCutoffSlider, hipCutoffLabel, "HIP Cutoff", rotary);
     hipCutoffSlider.setRange(20.0f, 20000.0f, 1.0f);
+
+    addAndMakeVisible(lopToggle);
+    addAndMakeVisible(hipToggle);
+    addAndMakeVisible(lopToggleLabel);
+    addAndMakeVisible(hipToggleLabel);
+    lopToggleLabel.setText("On/Off", juce::sendNotification);
+    hipToggleLabel.setText("On/Off", juce::sendNotification);
+
     hipCutoffSlider.setSkewFactorFromMidPoint(1000.0f);
     setSliderParams(lopQSlider, lopQLabel, "Q", rotary);
     lopQSlider.setRange(1.0f, 10.0f, 0.1f);
@@ -45,14 +53,29 @@ void FilterComponent::paint (juce::Graphics& g)
     int height = bounds.getHeight();
     int width = bounds.getWidth();
     int padding = 10;
-    int titleHeight = 18;
-    int title = height / 6;
+    int topStartY = 3;
+    int title = height / 9;
     int sliderLabelWidth = width / 5;
-    int sliderLabelHeight = height / 4;
+    int sliderLabelHeight = height / 9;
 
-    int sliderWidth = width / 2;
-    int sliderHeight = height / 2;
+    int sliderWidth = (width / 2) - padding;
+    int sliderHeight = (height / 2) - title;
     int sliderDiameter = std::min(sliderWidth, sliderHeight);
+
+    int sliderStartX = padding * 1.5;
+    int sliderStartY = title + sliderLabelHeight;
+
+    titleLabel.setBounds(padding * 1.5, padding / 1.5, width, title);
+
+    lopCutoffLabel.setBounds(sliderStartX, titleLabel.getBottom(), sliderLabelWidth, sliderLabelHeight);
+    lopCutoffSlider.setBounds(padding, lopCutoffLabel.getBottom() - padding, sliderDiameter, sliderHeight);
+    lopQSlider.setBounds(lopCutoffSlider.getRight(), sliderStartY, sliderDiameter, sliderHeight);
+    lopCutoffLabel.setBounds(lopQSlider.getRight() - sliderWidth, titleLabel.getBottom(), sliderDiameter, sliderLabelHeight);
+    hipCutoffSlider.setBounds(padding, lopCutoffSlider.getBottom(), sliderDiameter, sliderHeight);
+    hipQSlider.setBounds(hipCutoffSlider.getRight(), lopCutoffSlider.getBottom() + sliderLabelHeight, sliderDiameter, sliderHeight);
+
+
+
     
 }
 
@@ -69,7 +92,6 @@ void FilterComponent::setSliderParams(juce::Slider& slider, juce::Label& label, 
     addAndMakeVisible(label);
     slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
     label.setText(name, juce::dontSendNotification);
-
     switch (style)
     {
     case vertical:
@@ -78,7 +100,7 @@ void FilterComponent::setSliderParams(juce::Slider& slider, juce::Label& label, 
         break;
     case rotary:
         slider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-        label.setJustificationType(juce::Justification::centredRight);
+        label.setJustificationType(juce::Justification::centred);
         break;
     case horizontal:
         slider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 25);
