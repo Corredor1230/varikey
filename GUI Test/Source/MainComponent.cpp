@@ -15,6 +15,8 @@ MainComponent::MainComponent() :
     addAndMakeVisible(karpRight);
     addAndMakeVisible(noiseLeft);
     addAndMakeVisible(noiseRight);
+    addAndMakeVisible(lfo1);
+    addAndMakeVisible(lfo2);
 
     addAndMakeVisible(leftOscChoice);
     addAndMakeVisible(rightOscChoice);
@@ -43,6 +45,10 @@ MainComponent::MainComponent() :
     karpRight.setRegionTitle(rightRegionTitle);
     noiseRight.setRegionTitle(rightRegionTitle);
 
+    juce::String lfo2Region1 = "3";
+    juce::String lfo2Region2 = "4";
+    lfo2.setRegionTitle(lfo2Region1, lfo2Region2);
+
     std::initializer_list<const char*> synthList{ "Generator", "Additive", "Karplus", "Noise" };
     leftOscChoice.addItemList(juce::StringArray(synthList), 1);
     leftOscChoice.setJustificationType(juce::Justification::centred);
@@ -65,6 +71,7 @@ MainComponent::MainComponent() :
     filters.setCustomLookAndFeel(&varikeyLookAndFeel);
     ampAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
     modAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
+    lfo1.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (600, 700);
 }
@@ -86,6 +93,7 @@ MainComponent::~MainComponent()
     filters.setCustomLookAndFeel(nullptr);
     ampAdsr.setCustomLookAndFeel(nullptr);
     modAdsr.setCustomLookAndFeel(nullptr);
+    lfo1.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -106,9 +114,11 @@ void MainComponent::paint (juce::Graphics& g)
     int firstRowHeight = 2 * (height / 9);
     int secondRowHeight = height / 3;
     int firstColumnWidth = width / 3;
+    int filterWidth = firstColumnWidth - width / 30;
     int secondColumnWidth = width / 3;
 
-    int fmRowHeight = 1 * (height / 9);
+    int fmRowHeight = (height / 9);
+    int lfoHeight = (height / 8);
     int labelHeight = 18;
     int labelWidth = 50;
     int labelStartX = firstColumnWidth + (secondColumnWidth / 2) - (labelWidth / 2);
@@ -204,9 +214,11 @@ void MainComponent::paint (juce::Graphics& g)
     crossSlider.setBounds(firstColumnWidth, crossLabel.getBottom(), secondColumnWidth, crossHeight);
     crossLabel.setBounds(labelStartX, firstRowHeight, labelWidth, labelHeight);
 
-    filters.setBounds(firstRowStartX, secondRowStartY, firstColumnWidth, secondRowHeight);
-    ampAdsr.setBounds(firstColumnWidth, secondRowStartY, firstColumnWidth, secondRowHeight / 2);
-    modAdsr.setBounds(firstColumnWidth, ampAdsr.getBottom(), firstColumnWidth, secondRowHeight / 2);
+    filters.setBounds(firstRowStartX, secondRowStartY, filterWidth, secondRowHeight);
+    ampAdsr.setBounds(filters.getRight(), secondRowStartY, filterWidth, secondRowHeight / 2);
+    modAdsr.setBounds(filters.getRight(), ampAdsr.getBottom(), filterWidth, secondRowHeight / 2);
+    lfo1.setBounds(modAdsr.getRight(), secondRowStartY, width - modAdsr.getRight(), lfoHeight);
+    lfo2.setBounds(modAdsr.getRight(), lfo1.getBottom(), width - modAdsr.getRight(), lfoHeight);
 
 }
 

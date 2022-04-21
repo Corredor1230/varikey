@@ -12,6 +12,7 @@
 #include "Process Components/FilterComponent.h"
 #include "Process Components/AdsrComponent.h"
 #include "Process Components/ModAdsrComponent.h"
+#include "Process Components/LfoComponent.h"
 
 //==============================================================================
 /*
@@ -74,7 +75,8 @@ private:
     FilterComponent filters;
     AdsrComponent ampAdsr;
     ModAdsrComponent modAdsr;
-
+    LfoComponent lfo1;
+    LfoComponent lfo2;
 
 
     VarikeyLookAndFeel varikeyLookAndFeel;
