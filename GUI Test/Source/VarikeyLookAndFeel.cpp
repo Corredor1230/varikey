@@ -11,6 +11,8 @@
 #include<JuceHeader.h>
 #include "VarikeyLookAndFeel.h"
 
+using namespace juce;
+
 VarikeyLookAndFeel::VarikeyLookAndFeel(palette paletteType)
 {
     currentPalette = getColourPalette(paletteType);
@@ -70,8 +72,7 @@ void VarikeyLookAndFeel::setSliderPalette(ColourPalette palette, float alpha)
         palette.activeElement[1], palette.activeElement[2], alpha));
     setColour(colourIds::backgroundColourId, juce::Colour((juce::uint8)palette.inactiveElement[0],
         palette.inactiveElement[1], palette.inactiveElement[2], alpha));
-    setColour(colourIds::thumbColourId, juce::Colour((juce::uint8)palette.highlightElement[0],
-        palette.highlightElement[1], palette.highlightElement[2], alpha));
+    setColour(colourIds::thumbColourId, getColourFromPalette(highlight, alpha));
 
     //Rotary slider
     setColour(colourIds::rotarySliderFillColourId, juce::Colour((juce::uint8)palette.activeElement[0],
@@ -275,4 +276,76 @@ juce::Slider::SliderLayout VarikeyLookAndFeel::getSliderLayout(juce::Slider& sli
     }
 
     return layout;
+}
+
+juce::PopupMenu::Options VarikeyLookAndFeel::getOptionsForComboBoxPopupMenu(juce::ComboBox& box, juce::Label& label)
+{
+    return juce::PopupMenu::Options().withTargetComponent(&box)
+        .withItemThatMustBeVisible(box.getSelectedId())
+        .withInitiallySelectedItem(box.getSelectedId())
+        .withMinimumWidth(std::max(box.getWidth(), 70))
+        .withMaximumNumColumns(1)
+        .withStandardItemHeight(std::max(label.getHeight(), 22));
+}
+
+juce::Font VarikeyLookAndFeel::getPopupMenuFont()
+{
+    return customFont;
+}
+
+void VarikeyLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
+    const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider)
+{
+    auto outline = slider.findColour(Slider::rotarySliderOutlineColourId);
+    auto fill = slider.findColour(Slider::rotarySliderFillColourId);
+
+    auto bounds = Rectangle<int>(x, y, width, height).toFloat().reduced(10);
+
+    auto radius = jmin(bounds.getWidth(), bounds.getHeight()) / 2.0f;
+    auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+    auto lineW = jmin(8.0f, radius * 0.3f);
+    auto arcRadius = radius - lineW * 0.5f;
+    auto centreX = width / 2;
+    auto centreY = height / 2;
+
+    Path backgroundArc;
+    backgroundArc.addCentredArc(bounds.getCentreX(),
+        bounds.getCentreY(),
+        arcRadius,
+        arcRadius,
+        0.0f,
+        rotaryStartAngle,
+        rotaryEndAngle,
+        true);
+
+    g.setColour(outline);
+    g.strokePath(backgroundArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
+
+    if (slider.isEnabled())
+    {
+        Path valueArc;
+        valueArc.addCentredArc(bounds.getCentreX(),
+            bounds.getCentreY(),
+            arcRadius,
+            arcRadius,
+            0.0f,
+            rotaryStartAngle,
+            toAngle,
+            true);
+
+        g.setColour(fill);
+        g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
+    }
+
+    auto thumbWidth = lineW * 2.4;
+    auto thumbHeight = lineW;
+    /*Point<float> thumbPoint(bounds.getCentreX() + arcRadius * std::cos(toAngle - MathConstants<float>::halfPi),
+        bounds.getCentreY() + arcRadius * std::sin(toAngle - MathConstants<float>::halfPi));
+    g.fillRect(Rectangle<float>(thumbWidth, thumbHeight).withCentre(thumbPoint));*/
+
+    //g.setColour(slider.findColour(ResizableWindow::ColourIds::backgroundColourId));
+    g.setColour(slider.findColour(Slider::ColourIds::thumbColourId));
+    Path thumbTick;
+    thumbTick.addRectangle(- thumbHeight / 2, -radius - lineW / 2, thumbHeight, thumbWidth);
+    g.fillPath(thumbTick, AffineTransform::rotation(toAngle).translated(bounds.getCentreX(), bounds.getCentreY()));
 }

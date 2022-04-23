@@ -53,9 +53,11 @@ MainComponent::MainComponent() :
     leftOscChoice.addItemList(juce::StringArray(synthList), 1);
     leftOscChoice.setJustificationType(juce::Justification::centred);
     leftOscChoice.setTextWhenNothingSelected("Generator");
+    leftOscChoice.setSelectedId(1);
     rightOscChoice.addItemList(juce::StringArray(synthList), 1);
     rightOscChoice.setJustificationType(juce::Justification::centred);
     rightOscChoice.setTextWhenNothingSelected("Generator");
+    rightOscChoice.setSelectedId(1);
     
     tuner.setCustomLookAndFeel(&varikeyLookAndFeel);
     additiveLeft.setCustomLookAndFeel(&varikeyLookAndFeel);
@@ -73,7 +75,7 @@ MainComponent::MainComponent() :
     modAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
     lfo1.setCustomLookAndFeel(&varikeyLookAndFeel);
 
-    setSize (600, 700);
+    setSize (700, 700);
 }
 
 MainComponent::~MainComponent()
@@ -224,8 +226,6 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::resized()
 {
-
-
 }
 
 int MainComponent::getComboBoxIndex(juce::String& string)

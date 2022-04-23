@@ -13,6 +13,7 @@
 #include<JuceHeader.h>
 #include"LookAndFeelElements/Fonts/EmbeddedFonts.h"
 
+
 struct ColourPalette
 {
     std::array<int, 3> activeElement;
@@ -23,6 +24,7 @@ struct ColourPalette
     std::array<int, 3> globalDark;
 };
 
+using namespace juce;
 
 class VarikeyLookAndFeel : public juce::LookAndFeel_V4
 {
@@ -50,7 +52,7 @@ public:
     VarikeyLookAndFeel(palette paletteType);
     ~VarikeyLookAndFeel() override;
 
-    void setSliderPalette(ColourPalette palette, float alpha = 0.95f);
+    void setSliderPalette(ColourPalette palette, float alpha = 1.0f);
     void setColourPalette(palette paletteType);
     void setComponentPalette(ColourPalette palette, float alpha = 1.0f);
     void setFont(juce::Font& font);
@@ -61,8 +63,11 @@ public:
     juce::Slider::SliderLayout getSliderLayout(juce::Slider& slider) override;
     juce::Font getLabelFont(juce::Label&) override;
     juce::Font getComboBoxFont(juce::ComboBox&) override;
+    juce::Font getPopupMenuFont() override;
     juce::BorderSize<int> getLabelBorderSize(juce::Label&) override;
-    
+    juce::PopupMenu::Options getOptionsForComboBoxPopupMenu(juce::ComboBox& box, juce::Label& label) override;
+    void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
+        const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
     
     ColourPalette getColourPalette(palette paletteType = vaporwave);
     juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
@@ -74,7 +79,7 @@ private:
     struct ColourPalette currentPalette;
 
     //Colour Palettes
-    float sliderAlpha = 0.9;
+    float sliderAlpha = 1.0;
     float componentAlpha = 1.0;
     float verticalDistanceToSlider = 7.0;
     float horizontalDistanceToSlider = 7.0;
