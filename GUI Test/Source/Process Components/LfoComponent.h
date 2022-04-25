@@ -11,10 +11,28 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../VarikeyLookAndFeel.h"
 
 //==============================================================================
 /*
 */
+
+class LfoLookAndFeel : public VarikeyLookAndFeel
+{
+public:
+    VarikeyLookAndFeel::palette customPalette;
+    LfoLookAndFeel();
+    ~LfoLookAndFeel() override;
+
+    void drawRotarySlider(Graphics& g, int x, int y, int width, int height,
+        float sliderPos,
+        float rotaryStartAngle,
+        const float rotaryEndAngle,
+        Slider& slider) override;
+
+private:
+};
+
 class LfoComponent  : public juce::Component
 {
 public:
@@ -35,7 +53,11 @@ public:
     void setCustomLookAndFeel(juce::LookAndFeel_V4* customLookAndFeel);
     void setRegionTitle(juce::String& region1, juce::String& region2);
 
+
 private:
+
+    LfoLookAndFeel lfoLookAndFeel;
+
     juce::Label titleLabel;
     juce::Label lfo1Label;
     juce::Label lfo2Label;
@@ -64,3 +86,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LfoComponent)
 };
+

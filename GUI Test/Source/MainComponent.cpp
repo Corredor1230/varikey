@@ -1,9 +1,9 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent() : 
-    varikeyLookAndFeel(VarikeyLookAndFeel::palette::vaporwave)
+MainComponent::MainComponent()
 {
+    varikeyLookAndFeel.setColourPalette(VarikeyLookAndFeel::palette::vaporwave);
     setLookAndFeel(&varikeyLookAndFeel);
     addAndMakeVisible(tuner);
 
@@ -74,6 +74,7 @@ MainComponent::MainComponent() :
     ampAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
     modAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
     lfo1.setCustomLookAndFeel(&varikeyLookAndFeel);
+    lfo2.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (700, 700);
 }
@@ -114,13 +115,14 @@ void MainComponent::paint (juce::Graphics& g)
     int firstRowStartX = 0;
     int firstRowStartY = 0;
     int firstRowHeight = 2 * (height / 9);
-    int secondRowHeight = height / 3;
+    int secondRowHeight = height / 2.75;
     int firstColumnWidth = width / 3;
-    int filterWidth = firstColumnWidth - width / 30;
+    int filterWidth = firstColumnWidth * 0.8;
+    int adsrWidth = width / 2 - filterWidth;
     int secondColumnWidth = width / 3;
 
     int fmRowHeight = (height / 9);
-    int lfoHeight = (height / 8);
+    int lfoHeight = (3 * secondRowHeight) / 8;
     int labelHeight = 18;
     int labelWidth = 50;
     int labelStartX = firstColumnWidth + (secondColumnWidth / 2) - (labelWidth / 2);
@@ -130,13 +132,14 @@ void MainComponent::paint (juce::Graphics& g)
     int secondRowStartY = height / 3;
 
     int thirdRowStartX = 0;
-    int thirdRowStartY = (height / 3) * 2;
+    int thirdRowStartY = firstRowHeight + fmRowHeight + secondRowHeight;
+    int thirdRowHeight = height - firstRowHeight - fmRowHeight - secondRowHeight;
+    int tunerWidth = firstColumnWidth + secondColumnWidth;
 
 
     int oscChoiceWidth = (secondColumnWidth / 2) - padding;
     int oscChoiceHeight = (firstRowHeight / 4) - 1.5 * padding;
 
-    tuner.setBounds(0, thirdRowStartY, getWidth(), getHeight() / 3);
     leftOscChoice.setBounds(firstColumnWidth + (padding / 2), firstRowHeight - oscChoiceHeight - (padding / 1.5),
         oscChoiceWidth, oscChoiceHeight);
     rightOscChoice.setBounds(leftOscChoice.getRight() + padding, firstRowHeight - oscChoiceHeight - (padding / 1.5),
@@ -217,10 +220,13 @@ void MainComponent::paint (juce::Graphics& g)
     crossLabel.setBounds(labelStartX, firstRowHeight, labelWidth, labelHeight);
 
     filters.setBounds(firstRowStartX, secondRowStartY, filterWidth, secondRowHeight);
-    ampAdsr.setBounds(filters.getRight(), secondRowStartY, filterWidth, secondRowHeight / 2);
-    modAdsr.setBounds(filters.getRight(), ampAdsr.getBottom(), filterWidth, secondRowHeight / 2);
+    ampAdsr.setBounds(filters.getRight(), secondRowStartY, adsrWidth, secondRowHeight / 2);
+    modAdsr.setBounds(filters.getRight(), ampAdsr.getBottom(), adsrWidth, secondRowHeight / 2);
     lfo1.setBounds(modAdsr.getRight(), secondRowStartY, width - modAdsr.getRight(), lfoHeight);
     lfo2.setBounds(modAdsr.getRight(), lfo1.getBottom(), width - modAdsr.getRight(), lfoHeight);
+
+
+    tuner.setBounds(firstRowStartX, thirdRowStartY, 2*firstColumnWidth + secondColumnWidth, thirdRowHeight);
 
 }
 

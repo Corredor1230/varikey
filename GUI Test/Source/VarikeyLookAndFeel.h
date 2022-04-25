@@ -49,7 +49,7 @@ public:
         gDark
     };
 
-    VarikeyLookAndFeel(palette paletteType);
+    VarikeyLookAndFeel();
     ~VarikeyLookAndFeel() override;
 
     void setSliderPalette(ColourPalette palette, float alpha = 1.0f);
@@ -68,14 +68,18 @@ public:
     juce::PopupMenu::Options getOptionsForComboBoxPopupMenu(juce::ComboBox& box, juce::Label& label) override;
     void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
         const float rotaryStartAngle, const float rotaryEndAngle, Slider& slider) override;
+    void drawLinearSlider(Graphics& g, int x, int y, int width, int height,
+        float sliderPos,
+        float minSliderPos,
+        float maxSliderPos,
+        const Slider::SliderStyle style, Slider& slider) override;
     
     ColourPalette getColourPalette(palette paletteType = vaporwave);
-    juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);
-    
+    juce::Colour getColourFromPalette(paletteColours colour, float alpha = 1.0f);    
 
 private: 
 
-
+    palette currentEnumPalette;
     struct ColourPalette currentPalette;
 
     //Colour Palettes

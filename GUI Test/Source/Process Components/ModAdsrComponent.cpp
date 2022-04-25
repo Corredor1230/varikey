@@ -24,7 +24,7 @@ ModAdsrComponent::ModAdsrComponent()
     routeBox.setColour(juce::ComboBox::ColourIds::textColourId, juce::Colour());
 
 
-    titleLabel.setText("Mod ADSR", juce::dontSendNotification);
+    titleLabel.setText("Mod", juce::dontSendNotification);
     routeLabel.setText("Route", juce::dontSendNotification);
     attackSlider.setRange(0.0, maximumSliderValue, sliderInterval);
     attackSlider.setSkewFactorFromMidPoint(sliderSkewFromMid);
@@ -77,8 +77,8 @@ void ModAdsrComponent::paint(juce::Graphics& g)
     int sliderStartX = padding;
 
     titleLabel.setBounds(padding * 1.5, padding / 1.5, width / 2, titleHeight);
-    routeLabel.setBounds(titleLabel.getRight(), padding / 1.5, width / 4, titleHeight);
-    routeBox.setBounds(routeLabel.getRight() - padding / 2, padding, width / 6, titleHeight - padding / 2);
+    routeLabel.setBounds(width / 2, padding / 1.5, width / 4, titleHeight);
+    routeBox.setBounds(routeLabel.getRight() + padding / 2, padding, width / 5, titleHeight - padding / 2);
 
     int labelStartY = titleLabel.getBottom();
     attackLabel.setBounds(sliderStartX, labelStartY, sliderWidth, titleHeight);
