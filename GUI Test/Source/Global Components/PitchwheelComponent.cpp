@@ -1,29 +1,29 @@
 /*
   ==============================================================================
 
-    GlobalComponents.cpp
-    Created: 8 Apr 2022 11:35:45am
+    PitchwheelComponent.cpp
+    Created: 25 Apr 2022 11:36:32pm
     Author:  juanp
 
   ==============================================================================
 */
 
 #include <JuceHeader.h>
-#include "GlobalComponents.h"
+#include "PitchwheelComponent.h"
 
 //==============================================================================
-GlobalComponents::GlobalComponents()
+PitchwheelComponent::PitchwheelComponent()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
 
 }
 
-GlobalComponents::~GlobalComponents()
+PitchwheelComponent::~PitchwheelComponent()
 {
 }
 
-void GlobalComponents::paint (juce::Graphics& g)
+void PitchwheelComponent::paint (juce::Graphics& g)
 {
     /* This demo code just fills the component's background and
        draws some placeholder text to get you started.
@@ -39,11 +39,11 @@ void GlobalComponents::paint (juce::Graphics& g)
 
     g.setColour (juce::Colours::white);
     g.setFont (14.0f);
-    g.drawText ("GlobalComponents", getLocalBounds(),
+    g.drawText ("PitchwheelComponent", getLocalBounds(),
                 juce::Justification::centred, true);   // draw some placeholder text
 }
 
-void GlobalComponents::resized()
+void PitchwheelComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..

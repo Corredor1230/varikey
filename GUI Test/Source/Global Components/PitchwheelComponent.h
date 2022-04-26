@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    GlobalComponents.h
-    Created: 8 Apr 2022 11:35:45am
+    PitchwheelComponent.h
+    Created: 25 Apr 2022 11:36:32pm
     Author:  juanp
 
   ==============================================================================
@@ -15,15 +15,15 @@
 //==============================================================================
 /*
 */
-class GlobalComponents  : public juce::Component
+class PitchwheelComponent  : public juce::Component
 {
 public:
-    GlobalComponents();
-    ~GlobalComponents() override;
+    PitchwheelComponent();
+    ~PitchwheelComponent() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GlobalComponents)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PitchwheelComponent)
 };
