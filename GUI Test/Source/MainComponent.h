@@ -13,6 +13,7 @@
 #include "Process Components/AdsrComponent.h"
 #include "Process Components/ModAdsrComponent.h"
 #include "Process Components/LfoComponent.h"
+#include "Global Components/PitchwheelComponent.h"
 
 //==============================================================================
 /*
@@ -53,7 +54,6 @@ private:
     int rightOscValue = 1;
 
     EmbeddedFonts josefinSans;
-    TuningComponent tuner;
 
     //First Row
     AdditiveComponent additiveLeft;
@@ -77,7 +77,12 @@ private:
     ModAdsrComponent modAdsr;
     LfoComponent lfo1;
     LfoComponent lfo2;
+    PitchwheelComponent pitchwheel;
 
+    //Third Row
+    TuningComponent tuner;
+    juce::Slider volumeSlider;
+    juce::Label volumeLabel;
 
     VarikeyLookAndFeel varikeyLookAndFeel;
 

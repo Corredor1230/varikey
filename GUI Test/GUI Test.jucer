@@ -5,10 +5,10 @@
   <MAINGROUP id="GoT9if" name="GUI Test">
     <GROUP id="{67154D64-82B7-B856-F927-8A989BBFF8C4}" name="Source">
       <GROUP id="{B8DDD31C-5B6C-9D0D-CC5B-EA804AE49A3A}" name="Global Components">
-        <FILE id="jOaaLT" name="GlobalComponents.cpp" compile="1" resource="0"
-              file="Source/Global Components/GlobalComponents.cpp"/>
-        <FILE id="iJ2EE8" name="GlobalComponents.h" compile="0" resource="0"
-              file="Source/Global Components/GlobalComponents.h"/>
+        <FILE id="p9rpHI" name="PitchwheelComponent.cpp" compile="1" resource="0"
+              file="Source/Global Components/PitchwheelComponent.cpp"/>
+        <FILE id="iqb4bq" name="PitchwheelComponent.h" compile="0" resource="0"
+              file="Source/Global Components/PitchwheelComponent.h"/>
         <FILE id="cTwEOE" name="TuningComponent.cpp" compile="1" resource="0"
               file="Source/Global Components/TuningComponent.cpp"/>
         <FILE id="fScdqq" name="TuningComponent.h" compile="0" resource="0"

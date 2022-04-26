@@ -17,6 +17,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(noiseRight);
     addAndMakeVisible(lfo1);
     addAndMakeVisible(lfo2);
+    addAndMakeVisible(pitchwheel);
 
     addAndMakeVisible(leftOscChoice);
     addAndMakeVisible(rightOscChoice);
@@ -29,6 +30,16 @@ MainComponent::MainComponent()
     addAndMakeVisible(filters);
     addAndMakeVisible(ampAdsr);
     addAndMakeVisible(modAdsr);
+
+    addAndMakeVisible(volumeSlider);
+    addAndMakeVisible(volumeLabel);
+
+    volumeSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    volumeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 25);
+    volumeSlider.setRange(-60.0, 0.0, 0.01);
+    volumeSlider.setValue(-20.0);
+    volumeLabel.setText("Volume", juce::dontSendNotification);
+    volumeLabel.setJustificationType(juce::Justification::centred);
 
     crossSlider.setSliderStyle(juce::Slider::SliderStyle::LinearHorizontal);
     crossSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 25);
@@ -75,6 +86,7 @@ MainComponent::MainComponent()
     modAdsr.setCustomLookAndFeel(&varikeyLookAndFeel);
     lfo1.setCustomLookAndFeel(&varikeyLookAndFeel);
     lfo2.setCustomLookAndFeel(&varikeyLookAndFeel);
+    pitchwheel.setCustomLookAndFeel(&varikeyLookAndFeel);
 
     setSize (700, 700);
 }
@@ -97,6 +109,7 @@ MainComponent::~MainComponent()
     ampAdsr.setCustomLookAndFeel(nullptr);
     modAdsr.setCustomLookAndFeel(nullptr);
     lfo1.setCustomLookAndFeel(nullptr);
+    pitchwheel.setCustomLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -123,6 +136,7 @@ void MainComponent::paint (juce::Graphics& g)
 
     int fmRowHeight = (height / 9);
     int lfoHeight = (3 * secondRowHeight) / 8;
+    int pitchwheelHeight = secondRowHeight - lfoHeight * 2;
     int labelHeight = 18;
     int labelWidth = 50;
     int labelStartX = firstColumnWidth + (secondColumnWidth / 2) - (labelWidth / 2);
@@ -134,83 +148,101 @@ void MainComponent::paint (juce::Graphics& g)
     int thirdRowStartX = 0;
     int thirdRowStartY = firstRowHeight + fmRowHeight + secondRowHeight;
     int thirdRowHeight = height - firstRowHeight - fmRowHeight - secondRowHeight;
-    int tunerWidth = firstColumnWidth + secondColumnWidth;
+    int volumeWidth = width / 12 + padding * 2;
+    int tunerWidth = 2 * firstColumnWidth + secondColumnWidth - volumeWidth;
+
+    int volumeStartX = tunerWidth - padding;
+    int topStartY = 8 + padding / 2.5;
+    int volumeHeight = thirdRowHeight - labelHeight - 1.7 * padding - topStartY;
 
 
     int oscChoiceWidth = (secondColumnWidth / 2) - padding;
     int oscChoiceHeight = (firstRowHeight / 4) - 1.5 * padding;
+
+
 
     leftOscChoice.setBounds(firstColumnWidth + (padding / 2), firstRowHeight - oscChoiceHeight - (padding / 1.5),
         oscChoiceWidth, oscChoiceHeight);
     rightOscChoice.setBounds(leftOscChoice.getRight() + padding, firstRowHeight - oscChoiceHeight - (padding / 1.5),
         oscChoiceWidth, oscChoiceHeight);
 
+    genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+    additiveLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+    karpLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+    noiseLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+
+    genRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+    additiveRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+    karpRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+    noiseRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+
+
 
     switch (getComboBoxIndex(leftOscChoice.getText()))
     {
     case 0:
-        genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-        additiveLeft.setBounds(0, 0, 0, 0);
-        karpLeft.setBounds(0, 0, 0, 0);
-        noiseLeft.setBounds(0, 0, 0, 0);
+        genLeft.setVisible(true);
+        additiveLeft.setVisible(false);
+        karpLeft.setVisible(false);
+        noiseLeft.setVisible(false);
         break;
     case 1:
-        genLeft.setBounds(0, 0, 0, 0);
-        additiveLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-        karpLeft.setBounds(0, 0, 0, 0);
-        noiseLeft.setBounds(0, 0, 0, 0);
+        genLeft.setVisible(false);
+        additiveLeft.setVisible(true);
+        karpLeft.setVisible(false);
+        noiseLeft.setVisible(false);
         break;
     case 2:
-        genLeft.setBounds(0, 0, 0, 0);
-        additiveLeft.setBounds(0, 0, 0, 0);
-        karpLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-        noiseLeft.setBounds(0, 0, 0, 0);
+        genLeft.setVisible(false);
+        additiveLeft.setVisible(false);
+        karpLeft.setVisible(true);
+        noiseLeft.setVisible(false);
         break;
     case 3:
-        genLeft.setBounds(0, 0, 0, 0);
-        additiveLeft.setBounds(0, 0, 0, 0);
-        karpLeft.setBounds(0, 0, 0, 0);
-        noiseLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
+        genLeft.setVisible(false);
+        additiveLeft.setVisible(false);
+        karpLeft.setVisible(false);
+        noiseLeft.setVisible(true);
         break;
     default:
-        genLeft.setBounds(firstRowStartX, firstRowStartY, firstColumnWidth, firstRowHeight);
-        additiveLeft.setBounds(0, 0, 0, 0);
-        karpLeft.setBounds(0, 0, 0, 0);
-        noiseLeft.setBounds(0, 0, 0, 0);
+        genLeft.setVisible(true);
+        additiveLeft.setVisible(false);
+        karpLeft.setVisible(false);
+        noiseLeft.setVisible(false);
         break;
     }
 
     switch (getComboBoxIndex(rightOscChoice.getText()))
     {
     case 0:
-        genRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
-        additiveRight.setBounds(0, 0, 0, 0);
-        karpRight.setBounds(0, 0, 0, 0);
-        noiseRight.setBounds(0, 0, 0, 0);
+        genRight.setVisible(true);
+        additiveRight.setVisible(false);
+        karpRight.setVisible(false);
+        noiseRight.setVisible(false);
         break;
     case 1:
-        genRight.setBounds(0, 0, 0, 0);
-        additiveRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
-        karpRight.setBounds(0, 0, 0, 0);
-        noiseRight.setBounds(0, 0, 0, 0);
+        genRight.setVisible(false);
+        additiveRight.setVisible(true);
+        karpRight.setVisible(false);
+        noiseRight.setVisible(false);
         break;
     case 2:
-        genRight.setBounds(0, 0, 0, 0);
-        additiveRight.setBounds(0, 0, 0, 0);
-        karpRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
-        noiseRight.setBounds(0, 0, 0, 0);
+        genRight.setVisible(false);
+        additiveRight.setVisible(false);
+        karpRight.setVisible(true);
+        noiseRight.setVisible(false);
         break;
     case 3:
-        genRight.setBounds(0, 0, 0, 0);
-        additiveRight.setBounds(0, 0, 0, 0);
-        karpRight.setBounds(0, 0, 0, 0);
-        noiseRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
+        genRight.setVisible(false);
+        additiveRight.setVisible(false);
+        karpRight.setVisible(false);
+        noiseRight.setVisible(true);
         break;
     default:
-        genRight.setBounds(firstColumnWidth + secondColumnWidth, firstRowStartY, firstColumnWidth, firstRowHeight);
-        additiveRight.setBounds(0, 0, 0, 0);
-        karpRight.setBounds(0, 0, 0, 0);
-        noiseRight.setBounds(0, 0, 0, 0);
+        genRight.setVisible(true);
+        additiveRight.setVisible(false);
+        karpRight.setVisible(false);
+        noiseRight.setVisible(false);
         break;
     }
 
@@ -224,10 +256,11 @@ void MainComponent::paint (juce::Graphics& g)
     modAdsr.setBounds(filters.getRight(), ampAdsr.getBottom(), adsrWidth, secondRowHeight / 2);
     lfo1.setBounds(modAdsr.getRight(), secondRowStartY, width - modAdsr.getRight(), lfoHeight);
     lfo2.setBounds(modAdsr.getRight(), lfo1.getBottom(), width - modAdsr.getRight(), lfoHeight);
+    pitchwheel.setBounds(modAdsr.getRight(), lfo2.getBottom(), width - modAdsr.getRight(), pitchwheelHeight);
 
-
-    tuner.setBounds(firstRowStartX, thirdRowStartY, 2*firstColumnWidth + secondColumnWidth, thirdRowHeight);
-
+    tuner.setBounds(firstRowStartX, thirdRowStartY, tunerWidth, thirdRowHeight);
+    volumeLabel.setBounds(volumeStartX, thirdRowStartY + topStartY, volumeWidth, labelHeight);
+    volumeSlider.setBounds(volumeStartX, volumeLabel.getBottom(), volumeWidth, volumeHeight);
 }
 
 void MainComponent::resized()

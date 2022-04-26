@@ -114,7 +114,8 @@ LfoComponent::LfoComponent()
         "fm2Ratio", "fm2Depth",
         "lopCutoff", "lopQ",
         "hipCutoff", "hipQ",
-        "detune", "volume"
+        "detune", "vibFreq", "vibDepth", 
+        "volume"
     };
     routeBox.addItemList(juce::StringArray(synthList), 1);
     routeBox2.addItemList(juce::StringArray(synthList), 1);
